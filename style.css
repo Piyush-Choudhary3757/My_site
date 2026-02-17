@@ -55,7 +55,9 @@
 }
 
 /* ---- Global Reset & Base ---- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -503,8 +505,17 @@ img {
 }
 
 @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-    50% { opacity: 1; transform: scaleY(1); }
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scaleY(0.6);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
 }
 
 /* ---- Section Shared ---- */
@@ -648,7 +659,7 @@ img {
     position: absolute;
     inset: 0;
     background: radial-gradient(circle at 30% 30%, rgba(100, 255, 218, 0.08), transparent 60%),
-                radial-gradient(circle at 70% 70%, rgba(167, 139, 250, 0.08), transparent 60%);
+        radial-gradient(circle at 70% 70%, rgba(167, 139, 250, 0.08), transparent 60%);
 }
 
 .placeholder-icon {
@@ -981,6 +992,166 @@ img {
     /* width set by JS */
 }
 
+/* ---- What I Do ---- */
+.wid-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.wid-card {
+    padding: 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.wid-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: var(--transition-base);
+}
+
+.wid-card:hover::before {
+    opacity: 1;
+}
+
+.wid-icon {
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.wid-icon-ai {
+    color: var(--accent-secondary);
+}
+
+.wid-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+}
+
+.wid-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.wid-focus {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    backdrop-filter: blur(12px);
+}
+
+.wid-focus-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 16px;
+}
+
+.wid-focus-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.wid-focus-item {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 8px 18px;
+    background: var(--accent-dim);
+    border-radius: 24px;
+    border: 1px solid rgba(100, 255, 218, 0.08);
+    transition: var(--transition-fast);
+}
+
+.wid-focus-item:hover {
+    border-color: rgba(100, 255, 218, 0.25);
+    transform: translateY(-2px);
+}
+
+/* ---- Tech Strip ---- */
+.tech-strip {
+    margin-top: 48px;
+    text-align: center;
+    padding: 32px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(12px);
+}
+
+.tech-strip-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+}
+
+.tech-strip-icons {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ---- GitHub Stats ---- */
+.github-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.github-stat-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.github-stat-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.github-streak {
+    text-align: center;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+}
+
+.github-streak img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
 /* ---- Education ---- */
 .education-grid {
     display: grid;
@@ -1185,7 +1356,7 @@ img {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .animate-on-scroll.visible {
@@ -1212,6 +1383,10 @@ img {
     .skills-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .wid-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
@@ -1223,7 +1398,8 @@ img {
         cursor: auto;
     }
 
-    .cursor, .cursor-follower {
+    .cursor,
+    .cursor-follower {
         display: none;
     }
 
@@ -1296,6 +1472,15 @@ img {
     }
 
     .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wid-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .github-stats-grid {
         grid-template-columns: 1fr;
     }
 
