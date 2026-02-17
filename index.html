@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piyush Choudhary | Data Analyst & Data Scientist</title>
+    <meta name="description"
+        content="Portfolio of Piyush Choudhary — Data Analyst & Data Science professional specializing in SQL, Python, Power BI, and cloud analytics.">
+    <meta name="keywords"
+        content="Data Analyst, Data Scientist, SQL, Python, Power BI, Tableau, Portfolio, Piyush Choudhary">
+    <meta name="author" content="Piyush Choudhary">
+    <meta property="og:title" content="Piyush Choudhary | Data Analyst & Data Scientist">
+    <meta property="og:description"
+        content="Data Analyst & Data Science professional specializing in SQL, Python, Power BI, and cloud analytics.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="#hero" class="nav-logo">
+            <span class="logo-bracket">&lt;</span>PC<span class="logo-bracket"> /&gt;</span>
+        </a>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+            <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+            <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+            <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+            <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+        </ul>
+        <a href="Piyush-_Resume_.pdf" target="_blank" class="nav-resume-btn">Resume <svg width="14" height="14"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg></a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-nav-links">
+            <li><a href="#about" class="mobile-nav-link">About</a></li>
+            <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
+            <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+            <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+            <li><a href="Piyush-_Resume_.pdf" target="_blank" class="mobile-nav-link resume-link">Resume</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <p class="hero-greeting animate-on-scroll">
+                <span class="greeting-line"></span>
+                Hello, my name is
+            </p>
+            <h1 class="hero-name animate-on-scroll">
+                Piyush Choudhary<span class="accent-dot">.</span>
+            </h1>
+            <h2 class="hero-tagline animate-on-scroll">
+                I turn <span class="gradient-text">data into decisions</span>.
+            </h2>
+            <p class="hero-description animate-on-scroll">
+                Data Analyst & Data Science professional specializing in building automated analytics pipelines,
+                KPI reporting systems, and decision-ready dashboards. Experienced across
+                <span class="highlight-text">utilities</span>, <span class="highlight-text">government</span>,
+                <span class="highlight-text">manufacturing</span>, and <span class="highlight-text">nonprofits</span>.
+            </p>
+            <div class="hero-cta animate-on-scroll">
+                <a href="#contact" class="btn btn-primary">
+                    <span>Get In Touch</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#projects" class="btn btn-secondary">
+                    <span>View My Work</span>
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">01.</span> About Me
+                <span class="heading-line"></span>
+            </h2>
+            <div class="about-grid">
+                <div class="about-text animate-on-scroll">
+                    <p>
+                        I'm a data-driven professional who loves transforming raw, messy datasets into
+                        clear, actionable insights that power real business decisions. My journey started
+                        with a <strong>B.Tech (Honors) in Computer Technology with AI & Data Science
+                            specialization</strong>
+                        from SAGE University, India, and continued with a <strong>Master of Science in Data
+                            Science</strong>
+                        from Florida State University.
+                    </p>
+                    <p>
+                        Currently at <strong>Jacksonville Electric Authority (JEA)</strong>, I build and automate
+                        ETL pipelines processing thousands of operational records, integrate geospatial and
+                        asset data across enterprise systems, and develop SQL data models powering dashboards
+                        used by leadership for critical operational decisions.
+                    </p>
+                    <p>
+                        From automating cloud-based analytics with <strong>AWS</strong> to building smart IoT devices
+                        funded by the government, I bring a blend of technical depth and domain understanding
+                        that bridges the gap between data and impact.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-card">
+                            <span class="highlight-number">500K+</span>
+                            <span class="highlight-label">Records Managed</span>
+                        </div>
+                        <div class="highlight-card">
+                            <span class="highlight-number">40%</span>
+                            <span class="highlight-label">Efficiency Gains</span>
+                        </div>
+                        <div class="highlight-card">
+                            <span class="highlight-number">5+</span>
+                            <span class="highlight-label">Enterprise Systems</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image-wrapper animate-on-scroll">
+                    <div class="about-image-container">
+                        <div class="image-placeholder">
+                            <div class="placeholder-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                            </div>
+                            <span class="placeholder-initials">PC</span>
+                        </div>
+                        <div class="image-border"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section experience" id="experience">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">02.</span> Experience
+                <span class="heading-line"></span>
+            </h2>
+            <div class="timeline">
+                <!-- JEA -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <div class="timeline-header">
+                            <div>
+                                <h3 class="timeline-role">Data Analyst</h3>
+                                <p class="timeline-company">Jacksonville Electric Authority (JEA) <span
+                                        class="timeline-location">· Jacksonville, FL</span></p>
+                            </div>
+                            <span class="timeline-date">Oct 2025 – Present</span>
+                        </div>
+                        <ul class="timeline-details">
+                            <li>Build and automate Python ETL pipelines using Pandas, NumPy, and SQL to ingest,
+                                validate, and transform 1000+ operational and customer records across MDMS, CC&B, PI
+                                System, and GIS platforms</li>
+                            <li>Integrate utility operations data by architecting scalable pipelines connecting GIS
+                                tools (ArcGIS Pro, Survey123, Field Maps) with enterprise systems</li>
+                            <li>Develop and maintain SQL data models and reporting tables supporting recurring
+                                operational dashboards and ad-hoc analysis</li>
+                            <li>Perform statistical analysis and anomaly detection using Python and R on operational
+                                datasets</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">ArcGIS</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">ETL</span>
+                        </div>
+                        <div class="timeline-achievements">
+                            <div class="achievement">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg>
+                                <span>Automated recurring reporting, reducing manual effort significantly</span>
+                            </div>
+                            <div class="achievement">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg>
+                                <span>Built production SQL datasets spanning 500K+ records for leadership
+                                    dashboards</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Dreams Foundation -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <div class="timeline-header">
+                            <div>
+                                <h3 class="timeline-role">Data Analyst</h3>
+                                <p class="timeline-company">Community Dreams Foundation <span
+                                        class="timeline-location">· Sebring, FL</span></p>
+                            </div>
+                            <span class="timeline-date">Jun 2025 – Oct 2025</span>
+                        </div>
+                        <ul class="timeline-details">
+                            <li>Standardized KPI definitions and improved data quality across departments</li>
+                            <li>Built dashboards supporting executive reporting and outcomes tracking using Power BI and
+                                Tableau</li>
+                            <li>Developed analytical models and conducted impact assessments to measure program
+                                effectiveness</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag">Power BI</span>
+                            <span class="tag">Tableau</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">Excel</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prim Electrical -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <div class="timeline-header">
+                            <div>
+                                <h3 class="timeline-role">Data Analyst</h3>
+                                <p class="timeline-company">Prim Electrical Fixtures Pvt. Ltd. <span
+                                        class="timeline-location">· Indore, India</span></p>
+                            </div>
+                            <span class="timeline-date">Feb 2023 – Jul 2023</span>
+                        </div>
+                        <ul class="timeline-details">
+                            <li>Implemented ERP data validation and reconciliation checks, reducing inventory data
+                                discrepancies by 40%</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag">ERP</span>
+                            <span class="tag">Data Validation</span>
+                            <span class="tag">SQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AICTE -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <div class="timeline-header">
+                            <div>
+                                <h3 class="timeline-role">Data & AI Engineering Intern</h3>
+                                <p class="timeline-company">AICTE <span class="timeline-location">· India</span></p>
+                            </div>
+                            <span class="timeline-date">Jan 2022 – Apr 2022</span>
+                        </div>
+                        <ul class="timeline-details">
+                            <li>Automated cloud-based analytics and report generation using AWS (S3, SageMaker, Lambda)
+                            </li>
+                            <li>Saved 15+ hours per week and supported deployment of predictive models across 3
+                                production projects</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag">AWS</span>
+                            <span class="tag">SageMaker</span>
+                            <span class="tag">Lambda</span>
+                            <span class="tag">S3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SAGE University -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <div class="timeline-header">
+                            <div>
+                                <h3 class="timeline-role">Data Analyst</h3>
+                                <p class="timeline-company">SAGE University <span class="timeline-location">· Indore,
+                                        India</span></p>
+                            </div>
+                            <span class="timeline-date">Jan 2020</span>
+                        </div>
+                        <ul class="timeline-details">
+                            <li>Standardized ERP data pipelines supporting leadership decisions</li>
+                            <li>Reduced manual reporting effort by 40% through improved data governance</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag">ERP</span>
+                            <span class="tag">Data Governance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects & Research Section -->
+    <section class="section projects" id="projects">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">03.</span> Projects & Research
+                <span class="heading-line"></span>
+            </h2>
+            <div class="projects-grid">
+                <!-- Project 1: ETL Pipeline -->
+                <div class="project-card glass-card animate-on-scroll" id="project-etl">
+                    <div class="project-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                    </div>
+                    <div class="project-top">
+                        <h3 class="project-title">Enterprise ETL Pipeline Automation</h3>
+                    </div>
+                    <p class="project-description">
+                        Built automated ETL pipelines using SQL and Python to ingest, cleanse, and integrate
+                        50K+ operational records across 5 fiscal years from multiple enterprise systems.
+                        Performed data quality analysis and deduplication using validation logic.
+                    </p>
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>SQL</span>
+                        <span>Pandas</span>
+                        <span>ETL</span>
+                    </div>
+                </div>
+
+                <!-- Project 2: Smart Walking Stick -->
+                <div class="project-card glass-card animate-on-scroll" id="project-walking-stick">
+                    <div class="project-icon patent-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <div class="project-top">
+                        <span class="project-badge">Patent & Research</span>
+                        <h3 class="project-title">Smart Walking Stick with GPS</h3>
+                    </div>
+                    <p class="project-description">
+                        Developed a smart walking stick with GPS navigation and emergency alert system.
+                        Funded by the government, the device improved user satisfaction by 40% through
+                        real-time location tracking and SOS capabilities for visually impaired users.
+                    </p>
+                    <div class="project-tech">
+                        <span>IoT</span>
+                        <span>GPS</span>
+                        <span>Embedded Systems</span>
+                        <span>Patent</span>
+                    </div>
+                </div>
+
+                <!-- Project 3: AI Music Generation -->
+                <div class="project-card glass-card animate-on-scroll" id="project-music-gan">
+                    <div class="project-icon research-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M9 18V5l12-2v13" />
+                            <circle cx="6" cy="18" r="3" />
+                            <circle cx="18" cy="16" r="3" />
+                        </svg>
+                    </div>
+                    <div class="project-top">
+                        <span class="project-badge">AI Research</span>
+                        <h3 class="project-title">AI Music Generation using GANs</h3>
+                    </div>
+                    <p class="project-description">
+                        Conducted AI research to generate music using Generative Adversarial Network (GAN)
+                        models. Successfully produced 1,000+ unique tracks and reduced sound design time
+                        by 25%, demonstrating the potential of AI in creative applications.
+                    </p>
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>GANs</span>
+                        <span>Deep Learning</span>
+                        <span>Audio</span>
+                    </div>
+                </div>
+
+                <!-- Project 4: Cloud Analytics -->
+                <div class="project-card glass-card animate-on-scroll" id="project-cloud">
+                    <div class="project-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                        </svg>
+                    </div>
+                    <div class="project-top">
+                        <h3 class="project-title">Cloud-Based Analytics Platform</h3>
+                    </div>
+                    <p class="project-description">
+                        Automated cloud-based analytics and report generation using AWS services
+                        including S3, SageMaker, and Lambda. Saved 15+ hours per week and deployed
+                        predictive models across 3 production projects.
+                    </p>
+                    <div class="project-tech">
+                        <span>AWS S3</span>
+                        <span>SageMaker</span>
+                        <span>Lambda</span>
+                        <span>ML</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section skills" id="skills">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">04.</span> Skills & Tools
+                <span class="heading-line"></span>
+            </h2>
+            <div class="skills-grid">
+                <!-- Data Analysis -->
+                <div class="skill-category glass-card animate-on-scroll" id="skill-data-analysis">
+                    <div class="skill-category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M21 21H4.6c-.56 0-.84 0-1.054-.109a1 1 0 01-.437-.437C3 20.24 3 19.96 3 19.4V3" />
+                            <path d="M7 14.5l3.5-4 4 2 5.5-6" />
+                        </svg>
+                    </div>
+                    <h3 class="skill-category-title">Data Analysis & Modeling</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">SQL (PostgreSQL, MySQL, T-SQL)</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Python (Pandas, NumPy)</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="92"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">R Programming</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">ETL Pipelines</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Statistical Analysis & Forecasting</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Intelligence -->
+                <div class="skill-category glass-card animate-on-scroll" id="skill-bi">
+                    <div class="skill-category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
+                    </div>
+                    <h3 class="skill-category-title">Business Intelligence</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">Power BI</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Tableau</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Excel (Advanced)</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="93"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Dashboard Development</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="92"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cloud & GIS -->
+                <div class="skill-category glass-card animate-on-scroll" id="skill-cloud">
+                    <div class="skill-category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                        </svg>
+                    </div>
+                    <h3 class="skill-category-title">Cloud, GIS & Engineering</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">AWS (S3, SageMaker, Lambda)</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="82"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Azure</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="70"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">ArcGIS Pro & Survey123</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Git</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enterprise & Ops -->
+                <div class="skill-category glass-card animate-on-scroll" id="skill-enterprise">
+                    <div class="skill-category-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3 class="skill-category-title">Enterprise & Operations</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">ERP Systems (Oracle R12, EAM)</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Data Governance</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Stakeholder Communication</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Requirements & Documentation</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" data-width="88"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="section education" id="education">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">05.</span> Education
+                <span class="heading-line"></span>
+            </h2>
+            <div class="education-grid">
+                <div class="education-card glass-card animate-on-scroll" id="edu-fsu">
+                    <div class="edu-icon">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </div>
+                    <div class="edu-details">
+                        <h3 class="edu-degree">Master of Science, Data Science</h3>
+                        <p class="edu-school">Florida State University, USA</p>
+                        <p class="edu-date">August 2023 – May 2025</p>
+                    </div>
+                </div>
+                <div class="education-card glass-card animate-on-scroll" id="edu-sage">
+                    <div class="edu-icon">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </div>
+                    <div class="edu-details">
+                        <h3 class="edu-degree">B.Tech (Honors) — Computer Technology</h3>
+                        <p class="edu-specialization">Specialization in AI & Data Science</p>
+                        <p class="edu-school">SAGE University, Indore, India</p>
+                        <p class="edu-date">August 2019 – May 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">06.</span> Get In Touch
+                <span class="heading-line"></span>
+            </h2>
+            <div class="contact-content animate-on-scroll">
+                <p class="contact-text">
+                    I'm always open to new opportunities, collaborations, and interesting data challenges.
+                    Whether you have a question, want to discuss a project, or just want to say hello —
+                    my inbox is always open!
+                </p>
+                <a href="mailto:piyush99939@gmail.com" class="btn btn-primary btn-large" id="contact-email-btn">
+                    <span>Say Hello</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                </a>
+                <div class="contact-links">
+                    <a href="mailto:piyush99939@gmail.com" class="contact-link" id="contact-email" aria-label="Email">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/piyush-c3757" target="_blank" class="contact-link"
+                        id="contact-linkedin" aria-label="LinkedIn">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect x="2" y="9" width="4" height="12" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com/Piyush-Choudhary3757" target="_blank" class="contact-link"
+                        id="contact-github" aria-label="GitHub">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Designed & Built by <strong>Piyush Choudhary</strong></p>
+            <p class="footer-sub">Built with ❤️ using HTML, CSS & JavaScript</p>
+        </div>
+    </footer>
+
+    <!-- Side Elements -->
+    <div class="side-email">
+        <a href="mailto:piyush99939@gmail.com">piyush99939@gmail.com</a>
+    </div>
+    <div class="side-socials">
+        <a href="https://www.linkedin.com/in/piyush-c3757" target="_blank" aria-label="LinkedIn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+            </svg>
+        </a>
+        <a href="https://github.com/Piyush-Choudhary3757" target="_blank" aria-label="GitHub">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg>
+        </a>
+        <a href="mailto:piyush99939@gmail.com" aria-label="Email">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+            </svg>
+        </a>
+        <div class="side-line"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
