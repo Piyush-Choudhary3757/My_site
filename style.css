@@ -80,6 +80,100 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* ---- Preloader ---- */
+.preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-inner {
+    text-align: center;
+}
+
+.preloader-logo {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    animation: preloaderPulse 1.5s ease-in-out infinite;
+}
+
+.preloader-bracket {
+    color: var(--accent);
+}
+
+.preloader-text {
+    color: var(--text-bright);
+    margin: 0 4px;
+}
+
+.preloader-bar {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.preloader-fill {
+    height: 100%;
+    width: 0;
+    background: var(--gradient-1);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+@keyframes preloaderPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+/* ---- Noise Overlay ---- */
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+}
+
+/* ---- Scroll Progress ---- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--gradient-1);
+    z-index: 10001;
+    transition: width 0.05s linear;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.4), 0 0 20px rgba(100, 255, 218, 0.2);
+}
+
 ::selection {
     background: rgba(100, 255, 218, 0.2);
     color: var(--accent);
@@ -127,6 +221,23 @@ img {
     border-color: var(--accent-secondary);
     opacity: 0.8;
     background: rgba(100, 255, 218, 0.05);
+}
+
+/* ---- Glass Card Glow on Hover ---- */
+.glass-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(12px);
+    transition: var(--transition-base), box-shadow 0.4s ease, border-color 0.4s ease;
+    position: relative;
+}
+
+.glass-card:hover {
+    border-color: rgba(100, 255, 218, 0.15);
+    box-shadow: 0 0 30px rgba(100, 255, 218, 0.06),
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* ---- Particle Canvas ---- */
@@ -389,6 +500,33 @@ img {
     background-clip: text;
 }
 
+/* Rotating Text in Hero */
+.rotating-text-wrapper {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.rotating-text {
+    display: inline-block;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.rotating-text.fade-out {
+    opacity: 0;
+    transform: translateY(-15px);
+}
+
+.rotating-text.fade-in {
+    opacity: 0;
+    transform: translateY(15px);
+}
+
 .hero-description {
     font-size: 1.1rem;
     color: var(--text-secondary);
@@ -455,6 +593,23 @@ img {
 
 .btn-primary:hover svg {
     stroke: var(--bg-primary);
+}
+
+/* Button shimmer effect */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 30%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.btn:hover::after {
+    left: 130%;
 }
 
 .btn-secondary {
@@ -1351,7 +1506,7 @@ img {
     }
 }
 
-/* Scroll animations */
+/* Scroll animations with stagger */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(30px);
@@ -1362,6 +1517,59 @@ img {
 .animate-on-scroll.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Stagger delays for sibling elements */
+.animate-on-scroll.visible:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.animate-on-scroll.visible:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.animate-on-scroll.visible:nth-child(4) {
+    transition-delay: 0.3s;
+}
+
+.animate-on-scroll.visible:nth-child(5) {
+    transition-delay: 0.4s;
+}
+
+/* ---- Back to Top Button ---- */
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: var(--transition-base);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+    transform: translateY(-4px);
 }
 
 /* ---- Responsive ---- */

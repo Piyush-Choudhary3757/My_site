@@ -24,6 +24,26 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">
+                <span class="preloader-bracket">&lt;</span>
+                <span class="preloader-text">PC</span>
+                <span class="preloader-bracket">/&gt;</span>
+            </div>
+            <div class="preloader-bar">
+                <div class="preloader-fill" id="preloader-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Noise Texture Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
     <!-- Custom Cursor -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-follower" id="cursor-follower"></div>
@@ -75,7 +95,8 @@
                 Piyush Choudhary<span class="accent-dot">.</span>
             </h1>
             <h2 class="hero-tagline animate-on-scroll">
-                I turn <span class="gradient-text">data into decisions</span>.
+                I <span class="rotating-text-wrapper"><span class="rotating-text" id="rotating-text">turn data into
+                        decisions</span></span><span class="accent-dot">.</span>
             </h2>
             <p class="hero-description animate-on-scroll">
                 Data Analyst & Data Science professional specializing in building automated analytics pipelines,
@@ -882,6 +903,13 @@
         </a>
         <div class="side-line"></div>
     </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+    </button>
 
     <script src="script.js"></script>
 </body>
