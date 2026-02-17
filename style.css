@@ -2241,4 +2241,226 @@ img {
     .heading-line {
         display: none;
     }
+}/* AI Architecture Section */
+.ai-architecture {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.agentic-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 60px auto;
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+}
+
+.diagram-node {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 20px;
+    min-width: 160px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.diagram-node:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+}
+
+.node-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.node-label {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Specific Nodes */
+.brain-node {
+    border-color: var(--accent);
+    padding: 25px;
+    min-width: 200px;
+    background: rgba(100, 255, 218, 0.05);
+}
+
+.brain-node .node-icon {
+    animation: pulse 2s infinite;
+}
+
+.diagram-tools {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    position: relative;
+    padding-top: 20px;
+    /* Space for arrows */
+}
+
+.tool-node {
+    min-width: 120px;
+    padding: 15px;
+}
+
+.tool-node .node-icon {
+    font-size: 1.5rem;
+}
+
+/* Arrows */
+.diagram-arrow {
+    width: 2px;
+    background: var(--line);
+    position: relative;
+}
+
+.arrow-down {
+    height: 40px;
+}
+
+.arrow-down::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -4px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--line);
+}
+
+/* Complex branching arrows using pseudo-elements on .brain-node or tools is hard.
+   Using simplified CSS arrows for the tool branches.
+*/
+.tool-branch {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tool-branch::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    /* Connect to Brain level */
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background: var(--line);
+    transform: translateX(-50%);
+}
+
+/* Connecting Brain to Tools (Horizontal Line) */
+.diagram-tools::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    /* Halfway between Brain and Tools */
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: var(--line);
+    z-index: 1;
+}
+
+.diagram-tools::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 2px;
+    height: 20px;
+    background: var(--line);
+    transform: translateX(-50%);
+}
+
+/* Output Node */
+.output-node {
+    margin-top: 20px;
+    border-color: var(--text-secondary);
+}
+
+/* Cards */
+.architecture-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.arch-card {
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s ease;
+}
+
+.arch-card:hover {
+    transform: translateY(-5px);
+}
+
+.arch-card h3 {
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+}
+
+.arch-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.arch-card strong {
+    color: var(--text-primary);
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .diagram-tools {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .diagram-tools::before {
+        display: none;
+        /* Hide horizontal line */
+    }
+
+    .tool-branch::before {
+        height: 20px;
+        top: -20px;
+    }
 }
