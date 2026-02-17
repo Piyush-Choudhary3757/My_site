@@ -1506,14 +1506,44 @@ img {
     border-radius: 8px;
 }
 
-/* GitHub Grid Layout */
+/* GitHub Dashboard Layout */
+.github-dashboard {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.github-full-width {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.github-full-width:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+}
+
+.github-full-width img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
 .github-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 24px;
     justify-items: center;
-    max-width: 1000px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 .github-card {
