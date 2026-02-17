@@ -630,12 +630,11 @@ function initTerminal() {
             '5. Hinge Dating Data Analysis (NLP)'
         ],
         secret: [
-            '╔══════════════════════════════════════╗',
-            '║  🎉 You found the secret!            ║',
-            '║  "There are 10 types of people —     ║',
-            '║  those who understand binary and      ║',
-            '║  those who don\'t."                   ║',
-            '╚══════════════════════════════════════╝'
+            '🎉 You found the secret!',
+            '',
+            '"There are 10 types of people -',
+            ' those who understand binary and',
+            ' those who don\'t."'
         ]
     };
 
