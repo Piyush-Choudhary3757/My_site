@@ -501,13 +501,22 @@ function initCounters() {
 }
 
 function animateCounter(element) {
-    const text = element.textContent;
-    const match = text.match(/(\d+)/);
-    if (!match) return;
+    const dataTarget = element.getAttribute('data-target');
+    let target, suffix, prefix;
 
-    const target = parseInt(match[1]);
-    const suffix = text.replace(match[1], '').trim();
-    const prefix = text.indexOf(match[1]) > 0 ? text.substring(0, text.indexOf(match[1])) : '';
+    if (dataTarget) {
+        target = parseInt(dataTarget);
+        prefix = '';
+        suffix = '';
+    } else {
+        const text = element.textContent;
+        const match = text.match(/(\d+)/);
+        if (!match) return;
+        target = parseInt(match[1]);
+        suffix = text.replace(match[1], '').trim();
+        prefix = text.indexOf(match[1]) > 0 ? text.substring(0, text.indexOf(match[1])) : '';
+    }
+
     const duration = 1500;
     const start = performance.now();
 
@@ -522,7 +531,7 @@ function animateCounter(element) {
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
-            element.textContent = text; // Restore original
+            element.textContent = prefix + target + suffix;
         }
     }
 

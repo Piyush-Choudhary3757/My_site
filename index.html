@@ -15,6 +15,8 @@
         content="Data Analyst & Data Science professional specializing in SQL, Python, Power BI, and cloud analytics.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://piyush-choudhary3757.github.io/My_site/">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a1a'/%3E%3Ctext x='50' y='65' font-family='monospace' font-size='40' font-weight='bold' fill='%2364ffda' text-anchor='middle'%3EPC%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -92,7 +94,7 @@
                 Hello, my name is
             </p>
             <h1 class="hero-name animate-on-scroll">
-                Piyush Choudhary<span class="accent-dot">.</span>
+                <span class="gradient-text">Piyush Choudhary</span><span class="accent-dot">.</span>
             </h1>
             <h2 class="hero-tagline animate-on-scroll">
                 I <span class="rotating-text-wrapper"><span class="rotating-text" id="rotating-text">turn data into
@@ -121,6 +123,37 @@
         <div class="hero-scroll-indicator">
             <div class="scroll-line"></div>
             <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- Stats Counter Strip -->
+    <section class="stats-strip">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item animate-on-scroll">
+                    <span class="stat-number highlight-number" data-target="3">0</span>
+                    <span class="stat-suffix">+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item animate-on-scroll">
+                    <span class="stat-number highlight-number" data-target="10">0</span>
+                    <span class="stat-suffix">+</span>
+                    <span class="stat-label">Projects Completed</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item animate-on-scroll">
+                    <span class="stat-number highlight-number" data-target="5">0</span>
+                    <span class="stat-suffix">+</span>
+                    <span class="stat-label">Certifications</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item animate-on-scroll">
+                    <span class="stat-number highlight-number" data-target="4">0</span>
+                    <span class="stat-suffix">+</span>
+                    <span class="stat-label">Industries Served</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -838,7 +871,7 @@
     <section class="section github-stats" id="github-stats">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">05.</span> GitHub Activity
+                <span class="section-number">06.</span> GitHub Activity
                 <span class="heading-line"></span>
             </h2>
 
@@ -849,11 +882,155 @@
         </div>
     </section>
 
+    <!-- Certifications Section -->
+    <section class="section certifications" id="certifications">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">07.</span> Certifications
+                <span class="heading-line"></span>
+            </h2>
+            <div class="certs-grid">
+                <!-- NVIDIA -->
+                <div class="cert-card glass-card animate-on-scroll" id="cert-nvidia">
+                    <div class="cert-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#76b900" stroke-width="1.5">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <path d="M8 21h8M12 17v4" />
+                            <path d="M7 8l3 3-3 3M12 14h4" />
+                        </svg>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Fundamentals of Accelerated Data Science</h3>
+                        <p class="cert-issuer">NVIDIA Deep Learning Institute</p>
+                        <div class="cert-tags">
+                            <span class="cert-tag">RAPIDS</span>
+                            <span class="cert-tag">cuDF</span>
+                            <span class="cert-tag">GPU Computing</span>
+                        </div>
+                    </div>
+                    <div class="cert-badge-icon" title="Verified">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"
+                            stroke-width="2">
+                            <path d="M9 12l2 2 4-4" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Intel -->
+                <div class="cert-card glass-card animate-on-scroll" id="cert-intel">
+                    <div class="cert-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0071c5" stroke-width="1.5">
+                            <path d="M12 2L2 7v10l10 5 10-5V7L12 2z" />
+                            <path d="M12 22V12M2 7l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">AI From The Data Center to The Edge</h3>
+                        <p class="cert-issuer">Intel Corporation</p>
+                        <div class="cert-tags">
+                            <span class="cert-tag">Edge AI</span>
+                            <span class="cert-tag">OpenVINO</span>
+                            <span class="cert-tag">Inference</span>
+                        </div>
+                    </div>
+                    <div class="cert-badge-icon" title="Verified">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"
+                            stroke-width="2">
+                            <path d="M9 12l2 2 4-4" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- AWS Cloud -->
+                <div class="cert-card glass-card animate-on-scroll" id="cert-aws-cloud">
+                    <div class="cert-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF9900" stroke-width="1.5">
+                            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                        </svg>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">AWS Academy Graduate — Cloud Foundations</h3>
+                        <p class="cert-issuer">Amazon Web Services</p>
+                        <div class="cert-tags">
+                            <span class="cert-tag">EC2</span>
+                            <span class="cert-tag">S3</span>
+                            <span class="cert-tag">IAM</span>
+                        </div>
+                    </div>
+                    <div class="cert-badge-icon" title="Verified">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"
+                            stroke-width="2">
+                            <path d="M9 12l2 2 4-4" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- AWS ML -->
+                <div class="cert-card glass-card animate-on-scroll" id="cert-aws-ml">
+                    <div class="cert-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF9900" stroke-width="1.5">
+                            <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.57-3.25 3.93L12 14" />
+                            <path d="M9 10a4 4 0 0 1-1-7.9" />
+                            <circle cx="12" cy="18" r="3" />
+                            <path d="M12 15v-1" />
+                        </svg>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">AWS Academy Graduate — Machine Learning Foundations</h3>
+                        <p class="cert-issuer">Amazon Web Services</p>
+                        <div class="cert-tags">
+                            <span class="cert-tag">SageMaker</span>
+                            <span class="cert-tag">Rekognition</span>
+                            <span class="cert-tag">ML Pipelines</span>
+                        </div>
+                    </div>
+                    <div class="cert-badge-icon" title="Verified">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"
+                            stroke-width="2">
+                            <path d="M9 12l2 2 4-4" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Nasscom / Coding Ninjas -->
+                <div class="cert-card glass-card animate-on-scroll" id="cert-nasscom">
+                    <div class="cert-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                            <line x1="14" y1="4" x2="10" y2="20" />
+                        </svg>
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Nasscom Certified — Python Excellence</h3>
+                        <p class="cert-issuer">Coding Ninjas × Nasscom</p>
+                        <div class="cert-tags">
+                            <span class="cert-tag">Python</span>
+                            <span class="cert-tag">DSA</span>
+                            <span class="cert-tag">Problem Solving</span>
+                        </div>
+                    </div>
+                    <div class="cert-badge-icon" title="Verified">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"
+                            stroke-width="2">
+                            <path d="M9 12l2 2 4-4" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Education Section -->
     <section class="section education" id="education">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">07.</span> Education
+                <span class="section-number">08.</span> Education
                 <span class="heading-line"></span>
             </h2>
             <div class="education-grid">
