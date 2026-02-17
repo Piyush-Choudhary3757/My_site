@@ -1514,6 +1514,8 @@ img {
     padding: 16px;
     backdrop-filter: blur(12px);
     overflow: hidden;
+    max-width: 550px;
+    margin: 0 auto;
 }
 
 .github-streak img {
