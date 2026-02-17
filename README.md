@@ -4,7 +4,7 @@ A modern, dark-mode portfolio website showcasing my experience as a Data Analyst
 
 ## 🚀 Live Site
 
-Visit: [https://piyush.github.io/site](https://piyush.github.io/site) *(update with your actual GitHub Pages URL)*
+Visit: [https://piyush-choudhary3757.github.io/My_site/](https://piyush-choudhary3757.github.io/My_site/)
 
 ## ✨ Features
 
