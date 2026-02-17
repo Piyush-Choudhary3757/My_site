@@ -1538,37 +1538,60 @@ img {
     border-radius: 6px;
 }
 
-.github-grid {
+/* GitHub Bento Grid (Professional Dashboard) */
+.github-bento-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr 1fr;
+    /* 2 equal columns */
     gap: 24px;
-    justify-items: center;
     width: 100%;
 }
 
-.github-card {
-    text-align: center;
+.bento-tall,
+.bento-card {
     background: var(--glass);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    padding: 16px;
+    padding: 20px;
     backdrop-filter: blur(12px);
     overflow: hidden;
-    width: 100%;
+    text-align: center;
     transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.github-card:hover {
+.bento-tall:hover,
+.bento-card:hover {
     transform: translateY(-4px);
     border-color: var(--accent);
 }
 
-.github-card img {
+.bento-tall img,
+.bento-card img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 6px;
     display: block;
-    margin: 0 auto;
+}
+
+.bento-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.bento-stack .bento-card {
+    flex: 1;
+    /* Distribute height equally */
+}
+
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+    .github-bento-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ---- Certifications ---- */
