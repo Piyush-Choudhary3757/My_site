@@ -1143,6 +1143,67 @@
         </div>
     </section>
 
+    <!-- H1-B Runner Game Section -->
+    <section class="section game-section" id="game">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">10.</span> The H1-B Run
+                <span class="heading-line"></span>
+            </h2>
+            <p class="game-subtitle animate-on-scroll">Can you dodge the Math Monsters 🧮 and Time Clocks ⏰ to reach
+                your H1-B visa? 🟢</p>
+
+            <div class="game-wrapper animate-on-scroll">
+                <div class="game-container glass-card" id="game-container">
+                    <canvas id="game-canvas" width="800" height="300"></canvas>
+
+                    <!-- Start Screen Overlay -->
+                    <div class="game-overlay" id="game-start-overlay">
+                        <div class="game-overlay-content">
+                            <div class="game-title-icon">🏃‍♂️ → 🟢</div>
+                            <h3 class="game-overlay-title">The H1-B Run</h3>
+                            <p class="game-overlay-desc">Jump over Math Monsters & Time Clocks<br>to reach the H1-B
+                                visa!</p>
+                            <button class="game-btn" id="game-start-btn">
+                                <span>Press SPACE or Click to Start</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div class="game-overlay hidden" id="game-over-overlay">
+                        <div class="game-overlay-content">
+                            <h3 class="game-overlay-title game-over-title">💀 Caught!</h3>
+                            <p class="game-overlay-desc" id="game-over-msg">A Math Monster got you!</p>
+                            <p class="game-score-text">Score: <span id="final-score">0</span>m</p>
+                            <button class="game-btn" id="game-restart-btn">
+                                <span>Try Again</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Win Overlay -->
+                    <div class="game-overlay hidden" id="game-win-overlay">
+                        <div class="game-overlay-content">
+                            <div class="game-title-icon">🎉🇺🇸🎉</div>
+                            <h3 class="game-overlay-title game-win-title">H1-B Approved!</h3>
+                            <p class="game-overlay-desc">You made it through the math & deadlines!</p>
+                            <p class="game-score-text">Final Score: <span id="win-score">0</span>m</p>
+                            <button class="game-btn" id="game-replay-btn">
+                                <span>Play Again</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-controls-hint">
+                    <span>⬆️ SPACE / CLICK to Jump</span>
+                    <span class="game-score-display">Score: <span id="game-score">0</span>m</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
