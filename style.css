@@ -989,6 +989,128 @@ img {
     margin-top: 2px;
 }
 
+/* ---- Featured Insights ---- */
+.section-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    max-width: 500px;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 28px;
+}
+
+.insight-card {
+    padding: 32px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-1);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.insight-card:hover::before {
+    transform: scaleX(1);
+}
+
+.insight-card:hover {
+    transform: translateY(-4px) !important;
+}
+
+.insight-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #0A66C2;
+    background: rgba(10, 102, 194, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.insight-badge svg {
+    stroke: #0A66C2;
+}
+
+.insight-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.3;
+}
+
+.insight-excerpt {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.insight-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.insight-tag {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.insight-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    margin-top: 8px;
+    transition: var(--transition-fast);
+}
+
+.insight-card:hover .insight-read-more {
+    gap: 10px;
+}
+
+.insight-read-more svg {
+    transition: transform 0.3s ease;
+}
+
+.insight-card:hover .insight-read-more svg {
+    transform: translate(3px, -3px);
+}
+
 /* ---- Projects ---- */
 .projects-grid {
     display: grid;
