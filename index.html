@@ -91,7 +91,7 @@
         <div class="hero-content">
             <p class="hero-greeting animate-on-scroll">
                 <span class="greeting-line"></span>
-                Hello, my name is
+                <span id="dynamic-greeting">Hello</span>, my name is
             </p>
             <h1 class="hero-name animate-on-scroll">
                 <span class="gradient-text">Piyush Choudhary</span><span class="accent-dot">.</span>
@@ -215,6 +215,32 @@
                             <span class="placeholder-initials">PC</span>
                         </div>
                         <div class="image-border"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Terminal -->
+            <div class="terminal-wrapper animate-on-scroll">
+                <div class="terminal glass-card" id="interactive-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="terminal-title">piyush@portfolio ~ %</span>
+                    </div>
+                    <div class="terminal-body" id="terminal-output">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">→</span>
+                            <span class="terminal-text">Welcome! Type <span class="terminal-cmd">help</span> to see
+                                available commands.</span>
+                        </div>
+                    </div>
+                    <div class="terminal-input-line">
+                        <span class="terminal-prompt">→</span>
+                        <input type="text" class="terminal-input" id="terminal-input" placeholder="Type a command..."
+                            autocomplete="off" spellcheck="false">
                     </div>
                 </div>
             </div>
@@ -1071,7 +1097,7 @@
     <section class="section contact" id="contact">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">08.</span> Get In Touch
+                <span class="section-number">09.</span> Get In Touch
                 <span class="heading-line"></span>
             </h2>
             <div class="contact-content animate-on-scroll">

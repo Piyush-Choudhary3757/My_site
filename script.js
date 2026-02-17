@@ -569,6 +569,236 @@ function initSectionGlow() {
     });
 }
 
+// ---- Dynamic Greeting ----
+function initDynamicGreeting() {
+    const el = document.getElementById('dynamic-greeting');
+    if (!el) return;
+
+    const hour = new Date().getHours();
+    let greeting;
+
+    if (hour >= 5 && hour < 12) greeting = 'Good morning';
+    else if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
+    else if (hour >= 17 && hour < 21) greeting = 'Good evening';
+    else greeting = 'Hey there, night owl';
+
+    el.textContent = greeting;
+}
+
+// ---- Interactive Terminal ----
+function initTerminal() {
+    const input = document.getElementById('terminal-input');
+    const output = document.getElementById('terminal-output');
+    if (!input || !output) return;
+
+    const commands = {
+        help: [
+            'Available commands:',
+            '  about    → Who am I',
+            '  skills   → Technical skills',
+            '  contact  → How to reach me',
+            '  projects → My project highlights',
+            '  resume   → Open my resume',
+            '  clear    → Clear terminal',
+            '  secret   → ???'
+        ],
+        about: [
+            'Piyush Choudhary',
+            '─────────────────',
+            'Data Analyst @ JEA | MS Data Science @ FSU',
+            'Building analytics pipelines, KPI dashboards,',
+            'and exploring LLMs & Agentic AI workflows.'
+        ],
+        skills: [
+            'Languages:  Python, SQL, R, JavaScript',
+            'Analytics:  Pandas, NumPy, Scikit-learn, TensorFlow',
+            'Databases:  PostgreSQL, MySQL, SQLite',
+            'Viz:        Power BI, Tableau, Matplotlib',
+            'Cloud:      AWS (Lambda, S3, SageMaker), Azure, GCP',
+            'Tools:      Git, Docker, Linux, Jupyter'
+        ],
+        contact: [
+            'Email:    piyush99939@gmail.com',
+            'GitHub:   github.com/Piyush-Choudhary3757',
+            'LinkedIn: linkedin.com/in/piyush-c3757'
+        ],
+        projects: [
+            '1. Water Utility Analytics Pipeline (SQL + Python)',
+            '2. IoT Smart Agriculture Dashboard (AWS)',
+            '3. YOLOv8 Traffic Analysis System',
+            '4. LLM Council — Multi-model AI debate platform',
+            '5. Hinge Dating Data Analysis (NLP)'
+        ],
+        secret: [
+            '╔══════════════════════════════════════╗',
+            '║  🎉 You found the secret!            ║',
+            '║  "There are 10 types of people —     ║',
+            '║  those who understand binary and      ║',
+            '║  those who don\'t."                   ║',
+            '╚══════════════════════════════════════╝'
+        ]
+    };
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+
+        const cmd = input.value.trim().toLowerCase();
+        input.value = '';
+
+        // Echo the command
+        const echoLine = document.createElement('div');
+        echoLine.className = 'terminal-line';
+        echoLine.innerHTML = `<span class="terminal-prompt">→</span><span class="terminal-text terminal-input-echo">${cmd}</span>`;
+        output.appendChild(echoLine);
+
+        if (cmd === 'clear') {
+            output.innerHTML = '';
+            return;
+        }
+
+        if (cmd === 'resume') {
+            window.open('Piyush-_Resume_.pdf', '_blank');
+            const responseLine = document.createElement('div');
+            responseLine.className = 'terminal-line';
+            responseLine.innerHTML = '<span class="terminal-text terminal-response">Opening resume...</span>';
+            output.appendChild(responseLine);
+            output.scrollTop = output.scrollHeight;
+            return;
+        }
+
+        const response = commands[cmd];
+        if (response) {
+            response.forEach((line, i) => {
+                setTimeout(() => {
+                    const responseLine = document.createElement('div');
+                    responseLine.className = 'terminal-line';
+                    responseLine.innerHTML = `<span class="terminal-text terminal-response">${line}</span>`;
+                    output.appendChild(responseLine);
+                    output.scrollTop = output.scrollHeight;
+                }, i * 50);
+            });
+        } else {
+            const errorLine = document.createElement('div');
+            errorLine.className = 'terminal-line';
+            errorLine.innerHTML = `<span class="terminal-text terminal-response">Command not found: ${cmd}. Type <span class="terminal-cmd">help</span> for available commands.</span>`;
+            output.appendChild(errorLine);
+        }
+
+        output.scrollTop = output.scrollHeight;
+    });
+}
+
+// ---- Cursor Glow Trail ----
+function initCursorTrail() {
+    if (window.innerWidth <= 768) return; // Skip on mobile
+
+    const TRAIL_COUNT = 12;
+    const trails = [];
+
+    for (let i = 0; i < TRAIL_COUNT; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail';
+        document.body.appendChild(dot);
+        trails.push({
+            el: dot,
+            x: 0,
+            y: 0
+        });
+    }
+
+    let mouseX = 0, mouseY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateTrail() {
+        let prevX = mouseX;
+        let prevY = mouseY;
+
+        trails.forEach((trail, i) => {
+            const speed = 0.35 - (i * 0.02);
+            trail.x += (prevX - trail.x) * speed;
+            trail.y += (prevY - trail.y) * speed;
+
+            const scale = 1 - (i / TRAIL_COUNT) * 0.6;
+            const opacity = 1 - (i / TRAIL_COUNT);
+
+            trail.el.style.transform = `translate(${trail.x - 3}px, ${trail.y - 3}px) scale(${scale})`;
+            trail.el.style.opacity = opacity * 0.5;
+
+            prevX = trail.x;
+            prevY = trail.y;
+        });
+
+        requestAnimationFrame(animateTrail);
+    }
+
+    animateTrail();
+}
+
+// ---- Text Scramble Effect ----
+function initTextScramble() {
+    const chars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`01';
+
+    function scrambleText(element) {
+        const originalText = element.getAttribute('data-text') || element.textContent;
+        element.setAttribute('data-text', originalText);
+        const length = originalText.length;
+        let iteration = 0;
+
+        const interval = setInterval(() => {
+            element.textContent = originalText
+                .split('')
+                .map((char, index) => {
+                    if (index < iteration) return originalText[index];
+                    if (char === ' ') return ' ';
+                    return chars[Math.floor(Math.random() * chars.length)];
+                })
+                .join('');
+
+            if (iteration >= length) {
+                clearInterval(interval);
+                element.textContent = originalText;
+            }
+
+            iteration += 1 / 2;
+        }, 30);
+    }
+
+    const headings = document.querySelectorAll('.section-heading');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Find the text node (after the section-number span and heading-line span)
+                const heading = entry.target;
+                const textNodes = [];
+                heading.childNodes.forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                        textNodes.push(node);
+                    }
+                });
+
+                if (textNodes.length > 0) {
+                    const text = textNodes[0].textContent.trim();
+                    // Create a span wrapper for scramble
+                    const span = document.createElement('span');
+                    span.className = 'scramble-text';
+                    span.textContent = text;
+                    textNodes[0].replaceWith(span);
+                    scrambleText(span);
+                }
+
+                observer.unobserve(heading);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    headings.forEach(h => observer.observe(h));
+}
+
 // ---- Init Everything ----
 document.addEventListener('DOMContentLoaded', () => {
     // Lock scroll during preloader
@@ -604,4 +834,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initCounters();
     initParallax();
     initSectionGlow();
+    initDynamicGreeting();
+    initTerminal();
+    initCursorTrail();
+    initTextScramble();
 });
