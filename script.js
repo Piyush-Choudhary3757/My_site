@@ -632,9 +632,11 @@ function initTerminal() {
         secret: [
             '🎉 You found the secret!',
             '',
-            '"There are 10 types of people -',
-            ' those who understand binary and',
-            ' those who don\'t."'
+            '+---------------------------------+',
+            '| There are 10 types of people -  |',
+            '| those who understand binary and |',
+            '| those who don\'t.                |',
+            '+---------------------------------+'
         ]
     };
 
@@ -671,6 +673,9 @@ function initTerminal() {
                 setTimeout(() => {
                     const responseLine = document.createElement('div');
                     responseLine.className = 'terminal-line';
+                    if (line.trim().startsWith('+') || line.trim().startsWith('|')) {
+                        responseLine.classList.add('condensed');
+                    }
                     responseLine.innerHTML = `<span class="terminal-text terminal-response">${line}</span>`;
                     output.appendChild(responseLine);
                     output.scrollTop = output.scrollHeight;

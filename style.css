@@ -2006,6 +2006,11 @@ img {
     line-height: 1.6;
 }
 
+.terminal-line.condensed {
+    margin-bottom: 0;
+    line-height: 1.2;
+}
+
 .terminal-prompt {
     color: var(--accent);
     flex-shrink: 0;
@@ -2013,6 +2018,7 @@ img {
 
 .terminal-text {
     color: var(--text-secondary);
+    white-space: pre-wrap;
 }
 
 .terminal-cmd {
