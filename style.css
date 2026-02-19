@@ -2035,7 +2035,6 @@ img {
 
 .terminal-text {
     color: var(--text-secondary);
-    white-space: pre-wrap;
 }
 
 .terminal-cmd {
@@ -2074,6 +2073,7 @@ img {
 .terminal-response {
     color: var(--text-muted) !important;
     padding-left: 22px;
+    white-space: pre-wrap;
 }
 
 /* ---- Cursor Glow Trail ---- */
