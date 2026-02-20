@@ -544,8 +544,10 @@ function initParallax() {
         const scrolled = window.scrollY;
         const heroContent = document.querySelector('.hero-content');
         if (heroContent && scrolled < window.innerHeight) {
-            heroContent.style.transform = `translateY(${scrolled * 0.15}px)`;
-            heroContent.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
+            const progress = scrolled / window.innerHeight;
+            heroContent.style.transform = `translateY(${scrolled * 0.2}px) scale(${1 - progress * 0.05})`;
+            heroContent.style.opacity = 1 - progress * 1.2;
+            heroContent.style.filter = `blur(${progress * 3}px)`;
         }
     });
 }
@@ -744,7 +746,7 @@ function initCursorTrail() {
 
 // ---- Text Scramble Effect ----
 function initTextScramble() {
-    const chars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`01';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     function scrambleText(element) {
         const originalText = element.getAttribute('data-text') || element.textContent;
@@ -757,7 +759,7 @@ function initTextScramble() {
                 .split('')
                 .map((char, index) => {
                     if (index < iteration) return originalText[index];
-                    if (char === ' ') return ' ';
+                    if (char === ' ' || char === '&' || char === '.' || char === ',' || char === ':' || char === '-') return char;
                     return chars[Math.floor(Math.random() * chars.length)];
                 })
                 .join('');
@@ -767,8 +769,8 @@ function initTextScramble() {
                 element.textContent = originalText;
             }
 
-            iteration += 1 / 2;
-        }, 30);
+            iteration += 1;
+        }, 25);
     }
 
     const headings = document.querySelectorAll('.section-heading');

@@ -161,6 +161,70 @@ body {
     background-size: 256px 256px;
 }
 
+/* ---- Premium Background Orbs ---- */
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+    animation: orbFloat 20s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(100, 255, 218, 0.4), transparent 70%);
+    top: -5%;
+    right: -10%;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.35), transparent 70%);
+    bottom: 20%;
+    left: -10%;
+    animation-delay: -7s;
+}
+
+.orb-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.3), transparent 70%);
+    top: 50%;
+    right: 30%;
+    animation-delay: -14s;
+}
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(40px, -30px) scale(1.05);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+
+    75% {
+        transform: translate(30px, 40px) scale(1.02);
+    }
+}
+
 /* ---- Scroll Progress ---- */
 .scroll-progress {
     position: fixed;
@@ -223,27 +287,29 @@ img {
     background: rgba(100, 255, 218, 0.05);
 }
 
-/* ---- Glass Card Glow on Hover ---- */
+/* ---- Glass Card Glow on Hover (Primary Definition) ---- */
 .glass-card {
     background: var(--glass);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    backdrop-filter: blur(12px);
-    transition: var(--transition-base), box-shadow 0.4s ease, border-color 0.4s ease;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: var(--transition-base), box-shadow 0.5s ease, border-color 0.5s ease, transform 0.4s ease;
     position: relative;
     overflow: hidden;
 }
 
-.glass-card::before {
+/* Mouse-tracking spotlight overlay */
+.glass-card::after {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: var(--radius-lg);
-    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
-            rgba(100, 255, 218, 0.06),
+    border-radius: inherit;
+    background: radial-gradient(650px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(100, 255, 218, 0.07),
             transparent 40%);
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.6s ease;
     pointer-events: none;
     z-index: 0;
 }
@@ -253,15 +319,17 @@ img {
     z-index: 1;
 }
 
-.glass-card:hover::before {
+.glass-card:hover::after {
     opacity: 1;
 }
 
 .glass-card:hover {
     border-color: rgba(100, 255, 218, 0.2);
-    box-shadow: 0 0 40px rgba(100, 255, 218, 0.08),
-        0 10px 40px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow:
+        0 0 30px rgba(100, 255, 218, 0.07),
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-4px);
 }
 
 /* ---- Particle Canvas ---- */
@@ -366,12 +434,34 @@ img {
     display: flex;
     align-items: center;
     gap: 6px;
+    transition: var(--transition-base), box-shadow 0.4s ease;
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-resume-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    opacity: 0;
     transition: var(--transition-base);
+    z-index: -1;
 }
 
 .nav-resume-btn:hover {
-    background: var(--accent-dim);
-    transform: translateY(-1px);
+    color: var(--bg-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(100, 255, 218, 0.35), 0 4px 20px rgba(100, 255, 218, 0.15);
+}
+
+.nav-resume-btn:hover::before {
+    opacity: 1;
+}
+
+.nav-resume-btn:hover svg {
+    stroke: var(--bg-primary);
 }
 
 /* Hamburger */
@@ -544,12 +634,7 @@ img {
     animation: fadeInUp 0.6s 0.6s forwards;
 }
 
-.gradient-text {
-    background: var(--gradient-1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+/* gradient-text animated definition is above — do not duplicate */
 
 /* Rotating Text in Hero */
 .rotating-text-wrapper {
@@ -612,7 +697,7 @@ img {
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transition-base);
+    transition: var(--transition-base), box-shadow 0.4s ease;
     text-decoration: none;
     position: relative;
     overflow: hidden;
@@ -622,6 +707,7 @@ img {
     background: transparent;
     color: var(--accent);
     border: 1.5px solid var(--accent);
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
 }
 
 .btn-primary::before {
@@ -636,6 +722,8 @@ img {
 
 .btn-primary:hover {
     color: var(--bg-primary);
+    box-shadow: 0 0 30px rgba(100, 255, 218, 0.3), 0 4px 20px rgba(100, 255, 218, 0.15);
+    transform: translateY(-2px);
 }
 
 .btn-primary:hover::before {
@@ -654,7 +742,7 @@ img {
     left: -60%;
     width: 30%;
     height: 200%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
     transform: skewX(-20deg);
     transition: left 0.6s ease;
 }
@@ -673,6 +761,8 @@ img {
     border-color: var(--accent);
     color: var(--accent);
     background: var(--accent-dim);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.1);
+    transform: translateY(-2px);
 }
 
 .btn-large {
@@ -752,33 +842,21 @@ img {
 .heading-line {
     flex: 1;
     height: 1px;
-    background: var(--glass-border);
+    background: linear-gradient(90deg, rgba(100, 255, 218, 0.3), rgba(167, 139, 250, 0.1), transparent);
     max-width: 300px;
 }
 
-/* Glass Card */
-.glass-card {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(12px);
-    transition: var(--transition-base);
-}
-
-.glass-card:hover {
-    background: var(--glass-hover);
-    border-color: rgba(100, 255, 218, 0.12);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(100, 255, 218, 0.05);
-}
+/* Glass Card (duplicate removed — see primary definition above) */
 
 /* ---- Stats Counter Strip ---- */
 .stats-strip {
     padding: 48px 0;
     position: relative;
     z-index: 1;
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-    background: rgba(255, 255, 255, 0.01);
+    border-top: 1px solid rgba(100, 255, 218, 0.08);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.08);
+    background: rgba(255, 255, 255, 0.015);
+    backdrop-filter: blur(8px);
 }
 
 .stats-grid {
@@ -800,7 +878,10 @@ img {
 .stat-number {
     font-size: 2.5rem;
     font-weight: 800;
-    color: var(--text-bright);
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     line-height: 1;
 }
 
@@ -873,13 +954,13 @@ img {
     background: var(--glass);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    transition: var(--transition-base);
+    transition: var(--transition-base), box-shadow 0.4s ease;
 }
 
 .highlight-card:hover {
-    border-color: rgba(100, 255, 218, 0.15);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(100, 255, 218, 0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(100, 255, 218, 0.06);
 }
 
 .highlight-number {
@@ -1256,14 +1337,26 @@ img {
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
-    background: var(--gradient-1);
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-secondary), var(--accent));
+    background-size: 200% 100%;
     opacity: 0;
-    transition: var(--transition-base);
+    transition: opacity 0.4s ease;
+    animation: shimmerBorder 3s ease-in-out infinite;
 }
 
 .project-card:hover::before {
     opacity: 1;
+}
+
+@keyframes shimmerBorder {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 .project-icon {
@@ -1387,6 +1480,27 @@ img {
     background: var(--gradient-1);
     border-radius: 2px;
     transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 0 12px rgba(100, 255, 218, 0.4),
+        0 0 4px rgba(100, 255, 218, 0.2);
+}
+
+.skill-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.6);
+    opacity: 0;
+    transition: opacity 0.6s 1s;
+}
+
+.skill-fill.animated::after {
+    opacity: 1;
 }
 
 .skill-fill.animated {
@@ -1809,14 +1923,16 @@ img {
     border-radius: 50%;
     border: 1px solid var(--glass-border);
     color: var(--text-secondary);
-    transition: var(--transition-base);
+    transition: var(--transition-base), box-shadow 0.4s ease;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
 }
 
 .contact-link:hover {
     color: var(--accent);
     border-color: var(--accent);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(100, 255, 218, 0.1);
+    transform: translateY(-6px) scale(1.1);
+    box-shadow: 0 0 25px rgba(100, 255, 218, 0.2), 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* ---- Footer ---- */
@@ -1920,14 +2036,17 @@ img {
 /* Scroll animations with stagger */
 .animate-on-scroll {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(40px) scale(0.98);
+    filter: blur(4px);
+    transition: opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+        transform 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+        filter 0.9s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .animate-on-scroll.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
 }
 
 /* Stagger delays for sibling elements */
