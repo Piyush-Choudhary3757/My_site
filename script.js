@@ -957,96 +957,114 @@ function initGSAPAnimations() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Section headings — slide in from left with gradient reveal
-    gsap.utils.toArray('.section-heading').forEach(heading => {
-        gsap.from(heading, {
-            scrollTrigger: {
-                trigger: heading,
-                start: 'top 85%',
-                toggleActions: 'play none none none'
-            },
-            x: -60,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out'
+    // Helper: remove animate-on-scroll from GSAP-targeted elements so they don't conflict
+    function prepForGSAP(selector) {
+        gsap.utils.toArray(selector).forEach(el => {
+            el.classList.remove('animate-on-scroll');
+            el.classList.remove('visible');
+            el.style.opacity = '';
+            el.style.transform = '';
+            el.style.filter = '';
+            el.style.transition = 'none';
         });
-    });
+    }
+
+    // Prep all GSAP-targeted elements
+    prepForGSAP('.timeline-item');
+    prepForGSAP('.project-card');
+    prepForGSAP('.cert-card');
+    prepForGSAP('.stat-item');
+    prepForGSAP('.tech-icon');
 
     // Timeline items — stagger from left
     gsap.utils.toArray('.timeline-item').forEach((item, i) => {
-        gsap.from(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: 'top 80%',
-            },
-            x: -40,
-            opacity: 0,
-            duration: 0.8,
-            delay: i * 0.15,
-            ease: 'power2.out'
-        });
+        gsap.fromTo(item,
+            { x: -40, opacity: 0 },
+            {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                },
+                x: 0,
+                opacity: 1,
+                duration: 0.8,
+                delay: i * 0.12,
+                ease: 'power2.out'
+            }
+        );
     });
 
     // Project cards — pop in
     gsap.utils.toArray('.project-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-            },
-            y: 60,
-            scale: 0.9,
-            opacity: 0,
-            duration: 0.7,
-            delay: i * 0.1,
-            ease: 'back.out(1.5)'
-        });
+        gsap.fromTo(card,
+            { y: 50, scale: 0.92, opacity: 0 },
+            {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                },
+                y: 0,
+                scale: 1,
+                opacity: 1,
+                duration: 0.7,
+                delay: i * 0.1,
+                ease: 'back.out(1.5)'
+            }
+        );
     });
 
     // Cert cards — cascade in
     gsap.utils.toArray('.cert-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-            },
-            y: 40,
-            rotateX: 10,
-            opacity: 0,
-            duration: 0.6,
-            delay: i * 0.08,
-            ease: 'power2.out'
-        });
+        gsap.fromTo(card,
+            { y: 40, opacity: 0 },
+            {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.6,
+                delay: i * 0.08,
+                ease: 'power2.out'
+            }
+        );
     });
 
     // Stats counter — scale bounce
     gsap.utils.toArray('.stat-item').forEach((item, i) => {
-        gsap.from(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: 'top 90%',
-            },
-            scale: 0,
-            opacity: 0,
-            duration: 0.5,
-            delay: i * 0.15,
-            ease: 'back.out(2)'
-        });
+        gsap.fromTo(item,
+            { scale: 0, opacity: 0 },
+            {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 90%',
+                },
+                scale: 1,
+                opacity: 1,
+                duration: 0.5,
+                delay: i * 0.15,
+                ease: 'back.out(2)'
+            }
+        );
     });
 
     // Tech icons — wave effect
     gsap.utils.toArray('.tech-icon').forEach((icon, i) => {
-        gsap.from(icon, {
-            scrollTrigger: {
-                trigger: icon,
-                start: 'top 90%',
-            },
-            y: 20,
-            opacity: 0,
-            duration: 0.4,
-            delay: i * 0.05,
-            ease: 'power2.out'
-        });
+        gsap.fromTo(icon,
+            { y: 20, opacity: 0 },
+            {
+                scrollTrigger: {
+                    trigger: icon,
+                    start: 'top 90%',
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.4,
+                delay: i * 0.05,
+                ease: 'power2.out'
+            }
+        );
     });
 }
 
