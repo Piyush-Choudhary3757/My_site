@@ -404,25 +404,25 @@ function initTiltEffect() {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+
+            // For CSS glow pseudo-element
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+
+            // Light tilt
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / centerY * -4;
-            const rotateY = (x - centerX) / centerX * 4;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-
-            // Dynamic gradient follow
-            const percentX = (x / rect.width) * 100;
-            const percentY = (y / rect.height) * 100;
-            card.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(100, 255, 218, 0.04), transparent 50%), rgba(255, 255, 255, 0.03)`;
+            const rotateX = (y - centerY) / centerY * -2;
+            const rotateY = (x - centerX) / centerX * 2;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
         });
 
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            card.style.background = '';
         });
     });
 }
+
 
 // ---- Magnetic Buttons ----
 function initMagneticButtons() {
