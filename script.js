@@ -947,8 +947,8 @@ function initAutoTypingTerminal() {
         }
     }
 
-    // Start typing after a delay
-    setTimeout(typeNextChar, 2500);
+    // Start typing after preloader completes (3s preloader + 500ms buffer)
+    setTimeout(typeNextChar, 4000);
 }
 
 // ---- GSAP Scroll Animations ----
