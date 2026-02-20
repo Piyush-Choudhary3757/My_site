@@ -804,6 +804,252 @@ function initTextScramble() {
 
     headings.forEach(h => observer.observe(h));
 }
+
+// ---- Auto-Typing Code Terminal ----
+function initAutoTypingTerminal() {
+    const codeEl = document.getElementById('auto-typed-code');
+    if (!codeEl) return;
+
+    const codeSnippets = [
+        {
+            tab: 'pipeline.py',
+            lines: [
+                { text: '# ETL Pipeline — Production', cls: 'syntax-comment' },
+                { text: 'import', cls: 'syntax-keyword', rest: ' pandas ', restCls: 'syntax-keyword', rest2: 'as pd', rest2Cls: 'syntax-variable' },
+                { text: 'from', cls: 'syntax-keyword', rest: ' sqlalchemy ', restCls: '', rest2: 'import create_engine', rest2Cls: 'syntax-function' },
+                { text: '' },
+                { text: 'df = pd.', cls: '', rest: 'read_sql', restCls: 'syntax-function', rest2: '(query, engine)', rest2Cls: '' },
+                { text: 'df = df.', cls: '', rest: 'dropna', restCls: 'syntax-function', rest2: '().reset_index()', rest2Cls: '' },
+                { text: 'df[', cls: '', rest: '"efficiency"', restCls: 'syntax-string', rest2: '] = df.output / df.input', rest2Cls: '' },
+                { text: 'df.', cls: '', rest: 'to_sql', restCls: 'syntax-function', rest2: '("kpi_metrics", engine)', rest2Cls: '' },
+            ]
+        },
+        {
+            tab: 'model.py',
+            lines: [
+                { text: '# ML Model Training', cls: 'syntax-comment' },
+                { text: 'from', cls: 'syntax-keyword', rest: ' sklearn.ensemble ', restCls: '', rest2: 'import RandomForestClassifier', rest2Cls: 'syntax-class' },
+                { text: 'from', cls: 'syntax-keyword', rest: ' sklearn.metrics ', restCls: '', rest2: 'import accuracy_score', rest2Cls: 'syntax-function' },
+                { text: '' },
+                { text: 'model = ', cls: '', rest: 'RandomForestClassifier', restCls: 'syntax-class', rest2: '(n_estimators=100)', rest2Cls: '' },
+                { text: 'model.', cls: '', rest: 'fit', restCls: 'syntax-function', rest2: '(X_train, y_train)', rest2Cls: '' },
+                { text: 'accuracy = ', cls: '', rest: 'accuracy_score', restCls: 'syntax-function', rest2: '(y_test, predictions)', rest2Cls: '' },
+                { text: 'print(f"Accuracy: ', cls: '', rest: '{accuracy:.2%}', restCls: 'syntax-variable', rest2: '")', rest2Cls: 'syntax-string' },
+            ]
+        },
+        {
+            tab: 'analysis.sql',
+            lines: [
+                { text: '-- KPI Dashboard Query', cls: 'syntax-comment' },
+                { text: 'SELECT', cls: 'syntax-keyword', rest: ' department,', restCls: '', rest2: '', rest2Cls: '' },
+                { text: '       COUNT', cls: 'syntax-function', rest: '(*) ', restCls: '', rest2: 'AS total_records,', rest2Cls: 'syntax-variable' },
+                { text: '       AVG', cls: 'syntax-function', rest: '(efficiency) ', restCls: '', rest2: 'AS avg_efficiency,', rest2Cls: 'syntax-variable' },
+                { text: '       SUM', cls: 'syntax-function', rest: '(cost) ', restCls: '', rest2: 'AS total_cost', rest2Cls: 'syntax-variable' },
+                { text: 'FROM', cls: 'syntax-keyword', rest: ' operational_metrics', restCls: '', rest2: '', rest2Cls: '' },
+                { text: 'WHERE', cls: 'syntax-keyword', rest: ' fiscal_year = ', restCls: '', rest2: '2025', rest2Cls: 'syntax-number' },
+                { text: 'GROUP BY', cls: 'syntax-keyword', rest: ' department ', restCls: '', rest2: 'ORDER BY avg_efficiency DESC;', rest2Cls: 'syntax-keyword' },
+            ]
+        }
+    ];
+
+    let currentSnippet = 0;
+    let currentLine = 0;
+    let currentChar = 0;
+
+    function getLineHTML(lineObj) {
+        if (!lineObj.text) return '';
+        let html = '';
+        const fullText = lineObj.text + (lineObj.rest || '') + (lineObj.rest2 || '');
+        return fullText;
+    }
+
+    function buildSyntaxHTML(lineObj, charCount) {
+        const fullText = lineObj.text + (lineObj.rest || '') + (lineObj.rest2 || '');
+        const visibleText = fullText.substring(0, charCount);
+
+        // Build syntax-highlighted HTML for visible portion
+        let html = '';
+        let pos = 0;
+
+        // Part 1: lineObj.text
+        const t1 = lineObj.text;
+        const t1Visible = visibleText.substring(pos, Math.min(pos + t1.length, charCount));
+        if (t1Visible.length > 0) {
+            html += lineObj.cls ? `<span class="${lineObj.cls}">${t1Visible}</span>` : t1Visible;
+        }
+        pos += t1.length;
+
+        // Part 2: lineObj.rest
+        if (lineObj.rest && pos < charCount) {
+            const t2 = lineObj.rest;
+            const t2Visible = visibleText.substring(pos, Math.min(pos + t2.length, charCount));
+            if (t2Visible.length > 0) {
+                html += lineObj.restCls ? `<span class="${lineObj.restCls}">${t2Visible}</span>` : t2Visible;
+            }
+            pos += t2.length;
+        }
+
+        // Part 3: lineObj.rest2
+        if (lineObj.rest2 && pos < charCount) {
+            const t3 = lineObj.rest2;
+            const t3Visible = visibleText.substring(pos, Math.min(pos + t3.length, charCount));
+            if (t3Visible.length > 0) {
+                html += lineObj.rest2Cls ? `<span class="${lineObj.rest2Cls}">${t3Visible}</span>` : t3Visible;
+            }
+        }
+
+        return html;
+    }
+
+    function typeNextChar() {
+        const snippet = codeSnippets[currentSnippet];
+        const line = snippet.lines[currentLine];
+        const fullText = line.text + (line.rest || '') + (line.rest2 || '');
+
+        if (currentChar <= fullText.length) {
+            // Build all previous lines (fully typed)
+            let html = '';
+            for (let i = 0; i < currentLine; i++) {
+                html += buildSyntaxHTML(snippet.lines[i], 9999) + '\n';
+            }
+            // Current line (partially typed)
+            html += buildSyntaxHTML(line, currentChar);
+
+            codeEl.innerHTML = html;
+            currentChar++;
+            setTimeout(typeNextChar, 25 + Math.random() * 35);
+        } else {
+            // Move to next line
+            currentLine++;
+            currentChar = 0;
+            if (currentLine < snippet.lines.length) {
+                setTimeout(typeNextChar, 100);
+            } else {
+                // Snippet complete, wait then switch
+                setTimeout(() => {
+                    currentSnippet = (currentSnippet + 1) % codeSnippets.length;
+                    currentLine = 0;
+                    currentChar = 0;
+
+                    // Update tab name
+                    const tabEl = document.querySelector('.hero-terminal-tab');
+                    if (tabEl) tabEl.textContent = codeSnippets[currentSnippet].tab;
+
+                    // Fade out, clear, fade in
+                    codeEl.style.opacity = '0';
+                    setTimeout(() => {
+                        codeEl.innerHTML = '';
+                        codeEl.style.opacity = '1';
+                        typeNextChar();
+                    }, 400);
+                }, 3000);
+            }
+        }
+    }
+
+    // Start typing after a delay
+    setTimeout(typeNextChar, 2500);
+}
+
+// ---- GSAP Scroll Animations ----
+function initGSAPAnimations() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Section headings — slide in from left with gradient reveal
+    gsap.utils.toArray('.section-heading').forEach(heading => {
+        gsap.from(heading, {
+            scrollTrigger: {
+                trigger: heading,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            },
+            x: -60,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        });
+    });
+
+    // Timeline items — stagger from left
+    gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+        gsap.from(item, {
+            scrollTrigger: {
+                trigger: item,
+                start: 'top 80%',
+            },
+            x: -40,
+            opacity: 0,
+            duration: 0.8,
+            delay: i * 0.15,
+            ease: 'power2.out'
+        });
+    });
+
+    // Project cards — pop in
+    gsap.utils.toArray('.project-card').forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+            },
+            y: 60,
+            scale: 0.9,
+            opacity: 0,
+            duration: 0.7,
+            delay: i * 0.1,
+            ease: 'back.out(1.5)'
+        });
+    });
+
+    // Cert cards — cascade in
+    gsap.utils.toArray('.cert-card').forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+            },
+            y: 40,
+            rotateX: 10,
+            opacity: 0,
+            duration: 0.6,
+            delay: i * 0.08,
+            ease: 'power2.out'
+        });
+    });
+
+    // Stats counter — scale bounce
+    gsap.utils.toArray('.stat-item').forEach((item, i) => {
+        gsap.from(item, {
+            scrollTrigger: {
+                trigger: item,
+                start: 'top 90%',
+            },
+            scale: 0,
+            opacity: 0,
+            duration: 0.5,
+            delay: i * 0.15,
+            ease: 'back.out(2)'
+        });
+    });
+
+    // Tech icons — wave effect
+    gsap.utils.toArray('.tech-icon').forEach((icon, i) => {
+        gsap.from(icon, {
+            scrollTrigger: {
+                trigger: icon,
+                start: 'top 90%',
+            },
+            y: 20,
+            opacity: 0,
+            duration: 0.4,
+            delay: i * 0.05,
+            ease: 'power2.out'
+        });
+    });
+}
+
 // ---- Init Everything ----
 document.addEventListener('DOMContentLoaded', () => {
     // Lock scroll during preloader
@@ -843,4 +1089,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initTerminal();
     initCursorTrail();
     initTextScramble();
+    initAutoTypingTerminal();
+
+    // GSAP (defer to allow library loading)
+    setTimeout(initGSAPAnimations, 200);
 });
