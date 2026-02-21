@@ -1103,6 +1103,258 @@ function initGSAPAnimations() {
     });
 }
 
+// ---- Mode Toggle ----
+function initModeToggle() {
+    const toggleContainer = document.getElementById('mode-toggle');
+    if (!toggleContainer) return;
+
+    // Set initial mode to recruiter
+    document.body.setAttribute('data-mode', 'recruiter');
+
+    toggleContainer.addEventListener('click', () => {
+        const currentMode = document.body.getAttribute('data-mode');
+        const newMode = currentMode === 'recruiter' ? 'engineer' : 'recruiter';
+
+        document.body.setAttribute('data-mode', newMode);
+
+        // Update labels
+        const recruiterLabel = toggleContainer.querySelector('.recruiter-label');
+        const engineerLabel = toggleContainer.querySelector('.engineer-label');
+
+        if (newMode === 'engineer') {
+            recruiterLabel.classList.remove('active');
+            engineerLabel.classList.add('active');
+        } else {
+            engineerLabel.classList.remove('active');
+            recruiterLabel.classList.add('active');
+        }
+    });
+}
+
+// ---- Neural Knowledge Graph ----
+function initKnowledgeGraph() {
+    const container = document.getElementById('3d-graph');
+    if (!container || typeof ForceGraph === 'undefined') return;
+
+    // Define graph data
+    const gData = {
+        nodes: [
+            { id: 'Piyush', group: 1, val: 30, color: '#64ffda' },
+            { id: 'Python', group: 2, val: 20 },
+            { id: 'SQL', group: 2, val: 20 },
+            { id: 'AWS', group: 2, val: 15 },
+            { id: 'LLMs', group: 2, val: 15 },
+            { id: 'JEA', group: 3, val: 15, color: '#a78bfa' },
+            { id: 'AICTE', group: 3, val: 10, color: '#a78bfa' },
+            { id: 'ETL Pipeline', group: 4, val: 12, color: '#38bdf8' },
+            { id: 'AI Music GAN', group: 4, val: 12, color: '#38bdf8' },
+            { id: 'Dashboard', group: 4, val: 12, color: '#38bdf8' }
+        ],
+        links: [
+            { source: 'Piyush', target: 'Python' },
+            { source: 'Piyush', target: 'SQL' },
+            { source: 'Piyush', target: 'AWS' },
+            { source: 'Piyush', target: 'LLMs' },
+            { source: 'Piyush', target: 'JEA' },
+            { source: 'Piyush', target: 'AICTE' },
+            { source: 'JEA', target: 'SQL' },
+            { source: 'JEA', target: 'Python' },
+            { source: 'JEA', target: 'ETL Pipeline' },
+            { source: 'AICTE', target: 'AWS' },
+            { source: 'Python', target: 'AI Music GAN' },
+            { source: 'Python', target: 'LLMs' },
+            { source: 'SQL', target: 'Dashboard' },
+            { source: 'ETL Pipeline', target: 'Python' }
+        ]
+    };
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    const Graph = ForceGraph()(container)
+        .width(width)
+        .height(height)
+        .backgroundColor('rgba(0,0,0,0)')
+        .nodeRelSize(6)
+        .nodeAutoColorBy('group')
+        .nodeLabel('id')
+        .linkColor(() => 'rgba(100, 255, 218, 0.2)')
+        .linkWidth(1.5)
+        .linkDirectionalParticles(2)
+        .linkDirectionalParticleWidth(2)
+        .graphData(gData);
+
+    // Make nodes pulse/glow
+    Graph.nodeCanvasObject((node, ctx, globalScale) => {
+        const label = node.id;
+        const fontSize = 12 / globalScale;
+        ctx.font = `${fontSize}px "JetBrains Mono"`;
+        const textWidth = ctx.measureText(label).width;
+        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
+
+        ctx.fillStyle = 'rgba(10, 10, 26, 0.8)';
+        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = node.color || '#a78bfa';
+        ctx.fillText(label, node.x, node.y);
+
+        node.__bckgDimensions = bckgDimensions;
+    });
+
+    // Handle clicks
+    Graph.onNodeClick(node => {
+        Graph.centerAt(node.x, node.y, 1000);
+        Graph.zoom(3, 2000);
+
+        // Highlight logic
+        const highlightNodes = new Set();
+        const highlightLinks = new Set();
+
+        highlightNodes.add(node);
+        gData.links.forEach(link => {
+            if (link.source.id === node.id || link.target.id === node.id) {
+                highlightLinks.add(link);
+                highlightNodes.add(link.source);
+                highlightNodes.add(link.target);
+            }
+        });
+
+        Graph.nodeColor(n => highlightNodes.has(n) ? (n.color || '#64ffda') : 'rgba(255,255,255,0.1)')
+            .linkColor(l => highlightLinks.has(l) ? 'rgba(100, 255, 218, 0.8)' : 'rgba(255,255,255,0.05)')
+            .linkWidth(l => highlightLinks.has(l) ? 3 : 1)
+            .linkDirectionalParticles(l => highlightLinks.has(l) ? 4 : 0);
+    });
+
+    Graph.onBackgroundClick(() => {
+        Graph.zoomToFit(1000, 50);
+        Graph.nodeColor(n => n.color || '#a78bfa')
+            .linkColor(() => 'rgba(100, 255, 218, 0.2)')
+            .linkWidth(1.5)
+            .linkDirectionalParticles(2);
+    });
+
+    // Resize handling
+    window.addEventListener('resize', () => {
+        Graph.width(container.clientWidth).height(container.clientHeight);
+    });
+
+    // Initial zoom out then fit
+    setTimeout(() => {
+        Graph.zoomToFit(1500, 50);
+    }, 1000);
+}
+
+// ---- ETL Pipeline Mini-Game ----
+function initETLMiniGame() {
+    const defaultData = document.getElementById('draggable-data');
+    if (!defaultData) return;
+
+    const stages = ['extract', 'transform', 'load', 'dashboard'];
+    const dropzones = {};
+    stages.forEach(s => {
+        const dz = document.getElementById(`dropzone-${s}`);
+        if (dz) dropzones[s] = dz;
+    });
+
+    const status = document.getElementById('etl-status');
+    const gear = document.getElementById('transform-gear');
+    const dashboard = document.getElementById('etl-dashboard');
+    const resetBtn = document.getElementById('reset-etl');
+
+    let currentStage = 'extract';
+
+    // Set up dragging
+    defaultData.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', defaultData.id);
+        setTimeout(() => {
+            defaultData.style.opacity = '0.4';
+        }, 0);
+    });
+
+    defaultData.addEventListener('dragend', () => {
+        defaultData.style.opacity = '1';
+    });
+
+    // Drop logic
+    Object.keys(dropzones).forEach(key => {
+        const dz = dropzones[key];
+
+        dz.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Necessary to allow dropping
+            dz.classList.add('drag-over');
+        });
+
+        dz.addEventListener('dragleave', () => {
+            dz.classList.remove('drag-over');
+        });
+
+        dz.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dz.classList.remove('drag-over');
+
+            // Enforce order
+            const stageOrder = ['extract', 'transform', 'load'];
+            const currentIndex = stageOrder.indexOf(currentStage);
+            const dropIndex = stageOrder.indexOf(key);
+
+            if (dropIndex !== currentIndex + 1) {
+                // Must go in order
+                status.textContent = "Oops! Data must flow in sequence: Extract → Transform → Load";
+                status.style.color = "#ef4444";
+                return;
+            }
+
+            // Valid drop
+            dz.appendChild(defaultData);
+            currentStage = key;
+
+            status.style.color = "var(--accent)";
+
+            if (key === 'transform') {
+                status.innerHTML = "Transforming data via Pandas... <br/> <code>df.dropna().drop_duplicates()</code>";
+                gear.classList.add('spin');
+                defaultData.textContent = "Clean.json";
+                defaultData.className = "data-block clean-data";
+            } else if (key === 'load') {
+                status.innerHTML = "Loading data into PostgreSQL DB... <br/> <code>INSERT INTO prod_schema...</code>";
+                gear.classList.remove('spin');
+                defaultData.textContent = "Prod_DB";
+                defaultData.className = "data-block db-data";
+
+                // Trigger dashboard
+                setTimeout(() => {
+                    dashboard.classList.add('active');
+                    status.innerHTML = "Pipeline Complete! Dashboard live with updated metrics. 🎉";
+                    resetBtn.style.display = 'inline-block';
+                    defaultData.setAttribute('draggable', 'false');
+                    defaultData.style.cursor = 'default';
+                }, 1000);
+            }
+        });
+    });
+
+    // Reset button
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            currentStage = 'extract';
+            dropzones['extract'].appendChild(defaultData);
+            defaultData.setAttribute('draggable', 'true');
+            defaultData.style.cursor = 'grab';
+            defaultData.className = "data-block raw-data";
+            defaultData.textContent = "Raw.json";
+
+            gear.classList.remove('spin');
+            dashboard.classList.remove('active');
+
+            status.textContent = "Status: Waiting for data extraction...";
+            status.style.color = "var(--accent)";
+            resetBtn.style.display = 'none';
+        });
+    }
+}
+
 // ---- Init Everything ----
 document.addEventListener('DOMContentLoaded', () => {
     // Lock scroll during preloader
@@ -1125,6 +1377,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Features
     addDynamicStyles();
+    initModeToggle();
+    initKnowledgeGraph();
+    initETLMiniGame();
     initNavbar();
     initScrollProgress();
     initBackToTop();

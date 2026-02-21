@@ -24,6 +24,8 @@
         rel="stylesheet">
     <!-- Three.js for 3D Neural Network Background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <!-- Force Graph for Neural Knowledge Graph -->
+    <script src="https://unpkg.com/force-graph" defer></script>
     <!-- GSAP for premium scroll animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -87,6 +89,14 @@
                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7V17" />
             </svg></a>
+        <div class="mode-toggle-container" id="mode-toggle" aria-label="Toggle Recruiter/Engineer Mode"
+            title="Switch between Recruiter and Engineer view">
+            <span class="mode-label recruiter-label active">Recruiter</span>
+            <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+            </div>
+            <span class="mode-label engineer-label">Engineer</span>
+        </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
             <span></span><span></span><span></span>
         </button>
@@ -620,11 +630,19 @@
                     <div class="project-top">
                         <h3 class="project-title">Enterprise ETL Pipeline Automation</h3>
                     </div>
-                    <p class="project-description">
+                    <div class="project-description recruiter-content">
                         Built automated ETL pipelines using SQL and Python to ingest, cleanse, and integrate
                         50K+ operational records across 5 fiscal years from multiple enterprise systems.
                         Performed data quality analysis and deduplication using validation logic.
-                    </p>
+                    </div>
+                    <div class="project-description engineer-content">
+                        <strong>Architecture:</strong> Python (Pandas/NumPy) ETL scripts scheduled via Cron, extracting
+                        data from DB2/Oracle via ODBC into PostgreSQL data warehouse.<br />
+                        <strong>Scaling:</strong> Implemented chunked processing for 50K+ records. Used vectorized
+                        pandas operations to reduce runtime.<br />
+                        <strong>SQL Logic:</strong>
+                        <code>WITH RankedData AS (SELECT *, ROW_NUMBER() OVER(PARTITION BY id ORDER BY update_ts DESC) as rn FROM raw) SELECT * FROM RankedData WHERE rn = 1;</code>
+                    </div>
                     <div class="project-tech">
                         <span>Python</span>
                         <span>SQL</span>
@@ -646,11 +664,18 @@
                         <span class="project-badge">Patent & Research</span>
                         <h3 class="project-title">Smart Walking Stick with GPS</h3>
                     </div>
-                    <p class="project-description">
+                    <div class="project-description recruiter-content">
                         Developed a smart walking stick with GPS navigation and emergency alert system.
                         Funded by the government, the device improved user satisfaction by 40% through
                         real-time location tracking and SOS capabilities for visually impaired users.
-                    </p>
+                    </div>
+                    <div class="project-description engineer-content">
+                        <strong>Hardware:</strong> Arduino / NodeMCU ESP8266 integrated with NEO-6M GPS modules and
+                        HC-SR04 ultrasonic sensors.<br />
+                        <strong>Software:</strong> C++ firmware for signal processing. Applied Kalman filtering to raw
+                        GPS coordinates to reduce noise.<br />
+                        <strong>Comms:</strong> GSM SIM900A module utilized AT commands to transmit SOS JSON payloads.
+                    </div>
                     <div class="project-tech">
                         <span>IoT</span>
                         <span>GPS</span>
@@ -673,11 +698,19 @@
                         <span class="project-badge">AI Research</span>
                         <h3 class="project-title">AI Music Generation using GANs</h3>
                     </div>
-                    <p class="project-description">
+                    <div class="project-description recruiter-content">
                         Conducted AI research to generate music using Generative Adversarial Network (GAN)
                         models. Successfully produced 1,000+ unique tracks and reduced sound design time
                         by 25%, demonstrating the potential of AI in creative applications.
-                    </p>
+                    </div>
+                    <div class="project-description engineer-content">
+                        <strong>Model:</strong> Deep Convolutional GAN (DCGAN). Spectrogram representation of audio used
+                        for 2D convolutions.<br />
+                        <strong>Hyper-parameters:</strong> Learning rate: 0.0002. Optimizer: Adam (β1=0.5, β2=0.999),
+                        Batch size: 64.<br />
+                        <strong>Loss Function:</strong> Minimax loss with label smoothing to prevent discriminator
+                        overpowering.
+                    </div>
                     <div class="project-tech">
                         <span>Python</span>
                         <span>GANs</span>
@@ -697,11 +730,19 @@
                     <div class="project-top">
                         <h3 class="project-title">Cloud-Based Analytics Platform</h3>
                     </div>
-                    <p class="project-description">
+                    <div class="project-description recruiter-content">
                         Automated cloud-based analytics and report generation using AWS services
                         including S3, SageMaker, and Lambda. Saved 15+ hours per week and deployed
                         predictive models across 3 production projects.
-                    </p>
+                    </div>
+                    <div class="project-description engineer-content">
+                        <strong>Infrastructure:</strong> Serverless architecture. S3 bucket events trigger Lambda
+                        (Python 3.9) data validation functions.<br />
+                        <strong>ML Deployment:</strong> Hosted Random Forest models as SageMaker endpoints. IAM roles
+                        enforced least-privilege access.<br />
+                        <strong>Automation:</strong> Boto3 SDK heavily utilized for programmatic CI/CD and automated
+                        CloudWatch metrics.
+                    </div>
                     <div class="project-tech">
                         <span>AWS S3</span>
                         <span>SageMaker</span>
@@ -713,6 +754,84 @@
         </div>
     </section>
 
+
+    <!-- Knowledge Graph Section -->
+    <section class="section knowledge-graph" id="knowledge-graph">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">05.</span> Neural Knowledge Graph
+                <span class="heading-line"></span>
+            </h2>
+            <p class="section-subtitle animate-on-scroll">Interactive web of my skills, experience, and projects. Click,
+                drag, and explore nodes.</p>
+            <div class="graph-container glass-card animate-on-scroll" id="3d-graph"
+                style="height: 600px; width: 100%; border-radius: 12px; overflow: hidden; position: relative;"></div>
+        </div>
+    </section>
+
+    <!-- ETL Mini-Game Section -->
+    <section class="section etl-game" id="etl-game">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">06.</span> ETL Pipeline Visualizer
+                <span class="heading-line"></span>
+            </h2>
+            <p class="section-subtitle animate-on-scroll">Drag the raw data block through the pipeline to see it
+                transform into actionable insights.</p>
+
+            <div class="etl-container glass-card animate-on-scroll">
+                <div class="etl-stage" id="stage-extract">
+                    <h3 class="etl-stage-title">Extract (S3)</h3>
+                    <div class="etl-dropzone" id="dropzone-extract">
+                        <div class="data-block raw-data" draggable="true" id="draggable-data">Raw.json</div>
+                    </div>
+                </div>
+
+                <div class="etl-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+
+                <div class="etl-stage" id="stage-transform">
+                    <h3 class="etl-stage-title">Transform (Python)</h3>
+                    <div class="etl-dropzone" id="dropzone-transform"></div>
+                    <div class="transform-gear" id="transform-gear">⚙️</div>
+                </div>
+
+                <div class="etl-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+
+                <div class="etl-stage" id="stage-load">
+                    <h3 class="etl-stage-title">Load (SQL)</h3>
+                    <div class="etl-dropzone" id="dropzone-load"></div>
+                </div>
+
+                <div class="etl-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+
+                <div class="etl-stage" id="stage-dashboard">
+                    <h3 class="etl-stage-title">Dashboard</h3>
+                    <div class="etl-dashboard-mockup" id="etl-dashboard">
+                        <div class="bar-chart">
+                            <div class="bar bar-1"></div>
+                            <div class="bar bar-2"></div>
+                            <div class="bar bar-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="etl-status" id="etl-status">Status: Waiting for data extraction...</div>
+            <button class="btn btn-secondary" id="reset-etl" style="margin-top: 20px; display: none;">Reset
+                Pipeline</button>
+        </div>
+    </section>
 
     <!-- Skills Section -->
     <section class="section skills" id="skills">
