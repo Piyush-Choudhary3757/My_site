@@ -1073,15 +1073,17 @@ function initWorldMap() {
     canvas.height = H * dpr;
     ctx.scale(dpr, dpr);
 
+    // Cropped view: focus on the US→India journey corridor
+    const LON_MIN = -105, LON_MAX = 95, LAT_MIN = -5, LAT_MAX = 75;
     function lonLatToXY(lon, lat) {
-        return { x: ((lon + 180) / 360) * W, y: ((90 - lat) / 180) * H };
+        return { x: ((lon - LON_MIN) / (LON_MAX - LON_MIN)) * W, y: ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * H };
     }
 
     // Locations with smart label offsets to avoid overlap
     const locations = [
         { name: 'Indore, India', lon: 75.86, lat: 22.72, color: '#64ffda', sub: 'B.Tech · SAGE University', labelDir: 'right' },
-        { name: 'Tallahassee, FL', lon: -84.28, lat: 30.44, color: '#a78bfa', sub: 'M.S. · Florida State', labelDir: 'top' },
-        { name: 'Jacksonville, FL', lon: -81.66, lat: 30.33, color: '#38bdf8', sub: 'Data Analyst · JEA', labelDir: 'bottom' },
+        { name: 'Tallahassee, FL', lon: -84.28, lat: 30.44, color: '#a78bfa', sub: 'M.S. · Florida State', labelDir: 'left' },
+        { name: 'Jacksonville, FL', lon: -81.66, lat: 30.33, color: '#38bdf8', sub: 'Data Analyst · JEA', labelDir: 'right' },
     ];
     const pts = locations.map(l => ({ ...l, ...lonLatToXY(l.lon, l.lat) }));
 
@@ -1110,7 +1112,7 @@ function initWorldMap() {
     ];
 
     // Build dot grid by testing which dots fall inside continent polygons
-    const dotSpacing = 8;
+    const dotSpacing = 7;
     const dotGrid = [];
 
     function pointInPolygon(x, y, poly) {
@@ -1150,13 +1152,13 @@ function initWorldMap() {
         // Subtle grid lines
         ctx.strokeStyle = 'rgba(100,255,218,0.025)';
         ctx.lineWidth = 0.5;
-        for (let lon = -150; lon <= 180; lon += 30) {
+        for (let lon = -90; lon <= 90; lon += 15) {
             const { x } = lonLatToXY(lon, 0);
-            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+            if (x >= 0 && x <= W) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
         }
-        for (let lat = -60; lat <= 80; lat += 30) {
+        for (let lat = 0; lat <= 70; lat += 15) {
             const { y } = lonLatToXY(0, lat);
-            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+            if (y >= 0 && y <= H) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
         }
 
         // Equator (slightly brighter)
@@ -1169,7 +1171,7 @@ function initWorldMap() {
         // Render dot grid (land masses)
         dotGrid.forEach(dot => {
             ctx.beginPath();
-            ctx.arc(dot.x, dot.y, 1.2, 0, Math.PI * 2);
+            ctx.arc(dot.x, dot.y, 1.4, 0, Math.PI * 2);
             ctx.fillStyle = 'rgba(100,255,218,0.18)';
             ctx.fill();
         });
@@ -1188,7 +1190,7 @@ function initWorldMap() {
             if (ap <= 0) return;
             const fx = arc.from.x, fy = arc.from.y, tx = arc.to.x, ty = arc.to.y;
             const cpX = (fx + tx) / 2;
-            const cpY = Math.min(fy, ty) - (ai === 0 ? 140 : 50);
+            const cpY = Math.min(fy, ty) - (ai === 0 ? 180 : 60);
 
             // Full dashed path (faint background)
             ctx.beginPath();
@@ -1285,6 +1287,8 @@ function initWorldMap() {
                 lx = pt.x; ly = pt.y - 26; align = 'center';
             } else if (pt.labelDir === 'bottom') {
                 lx = pt.x; ly = pt.y + 22; align = 'center';
+            } else if (pt.labelDir === 'left') {
+                lx = pt.x - 18; ly = pt.y - 2; align = 'right';
             } else {
                 lx = pt.x + 18; ly = pt.y - 2; align = 'left';
             }
@@ -1296,7 +1300,10 @@ function initWorldMap() {
             const subW = ctx.measureText(pt.sub).width;
             const cardW = Math.max(nameW, subW) + 16;
             const cardH = 36;
-            let cardX = align === 'center' ? lx - cardW / 2 : lx - 4;
+            let cardX;
+            if (align === 'center') cardX = lx - cardW / 2;
+            else if (align === 'right') cardX = lx - cardW + 4;
+            else cardX = lx - 4;
             let cardY = pt.labelDir === 'top' ? ly - cardH + 4 : (pt.labelDir === 'bottom' ? ly - 2 : ly - 14);
 
             // Draw card bg
