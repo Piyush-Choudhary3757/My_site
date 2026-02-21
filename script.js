@@ -1103,33 +1103,6 @@ function initGSAPAnimations() {
     });
 }
 
-// ---- Mode Toggle ----
-function initModeToggle() {
-    const toggleContainer = document.getElementById('mode-toggle');
-    if (!toggleContainer) return;
-
-    // Set initial mode to recruiter
-    document.body.setAttribute('data-mode', 'recruiter');
-
-    toggleContainer.addEventListener('click', () => {
-        const currentMode = document.body.getAttribute('data-mode');
-        const newMode = currentMode === 'recruiter' ? 'engineer' : 'recruiter';
-
-        document.body.setAttribute('data-mode', newMode);
-
-        // Update labels
-        const recruiterLabel = toggleContainer.querySelector('.recruiter-label');
-        const engineerLabel = toggleContainer.querySelector('.engineer-label');
-
-        if (newMode === 'engineer') {
-            recruiterLabel.classList.remove('active');
-            engineerLabel.classList.add('active');
-        } else {
-            engineerLabel.classList.remove('active');
-            recruiterLabel.classList.add('active');
-        }
-    });
-}
 
 // ---- Neural Knowledge Graph ----
 function initKnowledgeGraph() {
@@ -1535,7 +1508,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Features
     addDynamicStyles();
-    initModeToggle();
     initKnowledgeGraph();
     initETLMiniGame();
     initPerceptronSandbox();
