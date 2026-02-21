@@ -1360,6 +1360,75 @@ function initETLMiniGame() {
     }
 }
 
+// ---- Career Footprint 3D Globe ----
+function initGlobe() {
+    const container = document.getElementById('globeViz');
+    if (!container || typeof Globe === 'undefined') return;
+
+    // Define key locations based on experience and education
+    const locations = [
+        { lat: 22.7196, lng: 75.8577, name: 'SAGE University (Indore)' },
+        { lat: 28.6139, lng: 77.2090, name: 'AICTE (New Delhi)' },
+        { lat: 30.4383, lng: -84.2807, name: 'FSU (Tallahassee)' },
+        { lat: 30.3322, lng: -81.6557, name: 'JEA (Jacksonville)' }
+    ];
+
+    // Connect the journey
+    const arcs = [
+        { startLat: 22.7196, startLng: 75.8577, endLat: 28.6139, endLng: 77.2090 }, // Indore to Delhi
+        { startLat: 28.6139, startLng: 77.2090, endLat: 30.4383, endLng: -84.2807 }, // Delhi to Florida
+        { startLat: 30.4383, startLng: -84.2807, endLat: 30.3322, endLng: -81.6557 }  // FSU to JEA
+    ];
+
+    const myGlobe = Globe()(container)
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+        .backgroundColor('rgba(0,0,0,0)')
+        .width(container.clientWidth)
+        .height(container.clientHeight)
+        .labelsData(locations)
+        .labelLat('lat')
+        .labelLng('lng')
+        .labelText('name')
+        .labelSize(1.5)
+        .labelDotRadius(0.5)
+        .labelColor(() => '#64ffda')
+        .arcsData(arcs)
+        .arcStartLat('startLat')
+        .arcStartLng('startLng')
+        .arcEndLat('endLat')
+        .arcEndLng('endLng')
+        .arcColor(() => '#a78bfa')
+        .arcDashLength(0.4)
+        .arcDashGap(0.2)
+        .arcDashAnimateTime(2000)
+        .arcStroke(1);
+
+    // Initial View setup
+    myGlobe.pointOfView({ lat: 25, lng: -10, altitude: 2 });
+
+    // Auto-rotate setup
+    myGlobe.controls().autoRotate = true;
+    myGlobe.controls().autoRotateSpeed = 1;
+    myGlobe.controls().enableZoom = false; // Disable zoom to prevent getting stuck while scrolling down the page
+
+    // Setup intersection observer to only rotate when visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                myGlobe.controls().autoRotateSpeed = 1.5;
+            } else {
+                myGlobe.controls().autoRotateSpeed = 0;
+            }
+        });
+    }, { threshold: 0.1 });
+
+    observer.observe(container);
+
+    window.addEventListener('resize', () => {
+        myGlobe.width(container.clientWidth).height(container.clientHeight);
+    });
+}
+
 // ---- Init Everything ----
 document.addEventListener('DOMContentLoaded', () => {
     // Lock scroll during preloader
@@ -1385,6 +1454,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initModeToggle();
     initKnowledgeGraph();
     initETLMiniGame();
+    initGlobe();
     initNavbar();
     initScrollProgress();
     initBackToTop();
