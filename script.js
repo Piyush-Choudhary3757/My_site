@@ -1104,7 +1104,7 @@ function initWorldMap() {
         ctx.clearRect(0, 0, W, H);
 
         // Grid
-        ctx.strokeStyle = 'rgba(100,255,218,0.03)';
+        ctx.strokeStyle = 'rgba(100,255,218,0.06)';
         ctx.lineWidth = 0.5;
         for (let lon = -180; lon <= 180; lon += 30) {
             const { x } = lonLatToXY(lon, 0);
@@ -1123,9 +1123,9 @@ function initWorldMap() {
                 i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
             });
             ctx.closePath();
-            ctx.fillStyle = 'rgba(100,255,218,0.04)';
+            ctx.fillStyle = 'rgba(100,255,218,0.08)';
             ctx.fill();
-            ctx.strokeStyle = 'rgba(100,255,218,0.12)';
+            ctx.strokeStyle = 'rgba(100,255,218,0.25)';
             ctx.lineWidth = 1;
             ctx.stroke();
         });
@@ -1163,7 +1163,7 @@ function initWorldMap() {
                 i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
             }
             ctx.strokeStyle = arc.col;
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = 3;
             ctx.shadowColor = arc.col;
             ctx.shadowBlur = 8;
             ctx.stroke();
@@ -1190,7 +1190,7 @@ function initWorldMap() {
             const pr = 12 + Math.sin(pulse + i * 1.2) * 4;
             ctx.beginPath();
             ctx.arc(pt.x, pt.y, pr * a, 0, Math.PI * 2);
-            ctx.fillStyle = hexRgba(pt.color, 0.12);
+            ctx.fillStyle = hexRgba(pt.color, 0.18);
             ctx.fill();
 
             // Main dot
@@ -1211,7 +1211,7 @@ function initWorldMap() {
             // Labels
             ctx.globalAlpha = a;
             const lx = pt.x + 14, ly = pt.y - 8;
-            ctx.font = 'bold 12px "Outfit", sans-serif';
+            ctx.font = 'bold 13px "Outfit", sans-serif';
             ctx.fillStyle = pt.color;
             ctx.textAlign = 'left';
             ctx.fillText(pt.name, lx, ly);
