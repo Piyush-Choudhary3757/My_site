@@ -1074,7 +1074,7 @@ function initWorldMap() {
     ctx.scale(dpr, dpr);
 
     // Cropped view: focus on the US→India journey corridor
-    const LON_MIN = -105, LON_MAX = 95, LAT_MIN = -5, LAT_MAX = 75;
+    const LON_MIN = -112, LON_MAX = 92, LAT_MIN = -5, LAT_MAX = 75;
     function lonLatToXY(lon, lat) {
         return { x: ((lon - LON_MIN) / (LON_MAX - LON_MIN)) * W, y: ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * H };
     }
