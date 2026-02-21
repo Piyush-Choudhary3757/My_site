@@ -1429,70 +1429,6 @@ function initGlobe() {
     });
 }
 
-// ---- Live A/B Test Simulator ----
-function initABTestSimulator() {
-    const btn = document.getElementById('ab-test-btn');
-    const convA = document.getElementById('ab-conversions-A');
-    const convB = document.getElementById('ab-conversions-B');
-    const trafB = document.getElementById('ab-traffic-B');
-    const barA = document.getElementById('ab-bar-A');
-    const barB = document.getElementById('ab-bar-B');
-    const probTxt = document.getElementById('ab-prob');
-
-    if (!btn) return;
-
-    let hitsA = 142, totalA = 1000;
-    let hitsB = 155, totalB = 1000;
-
-    probTxt.style.transition = "transform 0.2s";
-
-    function updateStats() {
-        convB.textContent = hitsB;
-        trafB.textContent = totalB;
-
-        let rateA = hitsA / totalA;
-        let rateB = hitsB / totalB;
-        let totalRate = rateA + rateB;
-
-        // Update bars
-        barA.style.width = `${(rateA / totalRate) * 100}%`;
-        barB.style.width = `${(rateB / totalRate) * 100}%`;
-
-        // Dummy Bayesian Prob Calc (simple approximation for visual effect)
-        let z = (rateB - rateA) / Math.sqrt((rateA * (1 - rateA) / totalA) + (rateB * (1 - rateB) / totalB));
-        // simple sigmoid to approximate probability
-        let prob = 1 / (1 + Math.exp(-z * 1.7));
-        probTxt.textContent = `${(prob * 100).toFixed(1)}%`;
-
-        // add animation punch
-        probTxt.style.transform = "scale(1.2)";
-        setTimeout(() => probTxt.style.transform = "scale(1)", 200);
-    }
-
-    btn.addEventListener('click', () => {
-        hitsB += 1; // User clicked!
-        updateStats();
-
-        // change button temporarily
-        let oldText = btn.textContent;
-        btn.textContent = "Converted! 🎉";
-        btn.style.background = "#38bdf8";
-        setTimeout(() => {
-            btn.textContent = oldText;
-            btn.style.background = "";
-        }, 1000);
-    });
-
-    // Passive simulated traffic
-    setInterval(() => {
-        if (Math.random() > 0.5) {
-            totalB++;
-            if (Math.random() > 0.8) hitsB++; // random other users converting
-            updateStats();
-        }
-    }, 2000);
-}
-
 // ---- AI Perceptron Sandbox ----
 function initPerceptronSandbox() {
     const canvas = document.getElementById('perceptron-canvas');
@@ -1671,7 +1607,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initKnowledgeGraph();
     initETLMiniGame();
     initGlobe();
-    initABTestSimulator();
     initPerceptronSandbox();
     initNavbar();
     initScrollProgress();
