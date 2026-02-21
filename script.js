@@ -1429,6 +1429,222 @@ function initGlobe() {
     });
 }
 
+// ---- Live A/B Test Simulator ----
+function initABTestSimulator() {
+    const btn = document.getElementById('ab-test-btn');
+    const convA = document.getElementById('ab-conversions-A');
+    const convB = document.getElementById('ab-conversions-B');
+    const trafB = document.getElementById('ab-traffic-B');
+    const barA = document.getElementById('ab-bar-A');
+    const barB = document.getElementById('ab-bar-B');
+    const probTxt = document.getElementById('ab-prob');
+
+    if (!btn) return;
+
+    let hitsA = 142, totalA = 1000;
+    let hitsB = 155, totalB = 1000;
+
+    probTxt.style.transition = "transform 0.2s";
+
+    function updateStats() {
+        convB.textContent = hitsB;
+        trafB.textContent = totalB;
+
+        let rateA = hitsA / totalA;
+        let rateB = hitsB / totalB;
+        let totalRate = rateA + rateB;
+
+        // Update bars
+        barA.style.width = `${(rateA / totalRate) * 100}%`;
+        barB.style.width = `${(rateB / totalRate) * 100}%`;
+
+        // Dummy Bayesian Prob Calc (simple approximation for visual effect)
+        let z = (rateB - rateA) / Math.sqrt((rateA * (1 - rateA) / totalA) + (rateB * (1 - rateB) / totalB));
+        // simple sigmoid to approximate probability
+        let prob = 1 / (1 + Math.exp(-z * 1.7));
+        probTxt.textContent = `${(prob * 100).toFixed(1)}%`;
+
+        // add animation punch
+        probTxt.style.transform = "scale(1.2)";
+        setTimeout(() => probTxt.style.transform = "scale(1)", 200);
+    }
+
+    btn.addEventListener('click', () => {
+        hitsB += 1; // User clicked!
+        updateStats();
+
+        // change button temporarily
+        let oldText = btn.textContent;
+        btn.textContent = "Converted! 🎉";
+        btn.style.background = "#38bdf8";
+        setTimeout(() => {
+            btn.textContent = oldText;
+            btn.style.background = "";
+        }, 1000);
+    });
+
+    // Passive simulated traffic
+    setInterval(() => {
+        if (Math.random() > 0.5) {
+            totalB++;
+            if (Math.random() > 0.8) hitsB++; // random other users converting
+            updateStats();
+        }
+    }, 2000);
+}
+
+// ---- AI Perceptron Sandbox ----
+function initPerceptronSandbox() {
+    const canvas = document.getElementById('perceptron-canvas');
+    const btn = document.getElementById('train-perceptron-btn');
+    const epochTxt = document.getElementById('perceptron-epochs');
+    const container = document.getElementById('perceptron-canvas-container');
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width = container.clientWidth;
+    let height = container.clientHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    let points = [];
+    let w = [0, 0];
+    let b = 0;
+    let lr = 0.05;
+    let training = false;
+    let epoch = 0;
+
+    window.addEventListener('resize', () => {
+        width = container.clientWidth;
+        height = container.clientHeight;
+        canvas.width = width;
+        canvas.height = height;
+        draw();
+    });
+
+    canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        // Label: 1 if user clicked right side, 0 if left side
+        const label = x > width / 2 ? 1 : 0;
+
+        // Normalize points to -1 to 1 for easier training
+        const nx = (x / width) * 2 - 1;
+        const ny = (y / height) * 2 - 1;
+
+        points.push({ x, y, nx, ny, label });
+        draw();
+    });
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // draw separator guide initially (faint)
+        ctx.strokeStyle = "rgba(255,255,255,0.1)";
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(width / 2, 0);
+        ctx.lineTo(width / 2, height);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // draw line if training or has weights
+        if (w[0] !== 0 || w[1] !== 0) {
+            ctx.strokeStyle = "#64ffda"; // accent color
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // line equation: w0*x + w1*y + b = 0 => y = -(w0*x + b) / w1
+
+            // To handle w[1] being very small (near vertical lines), we check ranges
+            if (Math.abs(w[1]) > 0.01) {
+                let x1 = -1;
+                let y1 = -(w[0] * x1 + b) / w[1];
+                let x2 = 1;
+                let y2 = -(w[0] * x2 + b) / w[1];
+                ctx.moveTo((x1 + 1) / 2 * width, (y1 + 1) / 2 * height);
+                ctx.lineTo((x2 + 1) / 2 * width, (y2 + 1) / 2 * height);
+            } else {
+                let y1 = -1;
+                let x1 = -(w[1] * y1 + b) / w[0];
+                let y2 = 1;
+                let x2 = -(w[1] * y2 + b) / w[0];
+                ctx.moveTo((x1 + 1) / 2 * width, (y1 + 1) / 2 * height);
+                ctx.lineTo((x2 + 1) / 2 * width, (y2 + 1) / 2 * height);
+            }
+            ctx.stroke();
+        }
+
+        // draw points
+        points.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = p.label === 1 ? "#a78bfa" : "#38bdf8"; // Purple (1), Blue (0)
+            ctx.fill();
+            ctx.strokeStyle = "#000";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        });
+    }
+
+    function trainStep() {
+        if (!training) return;
+
+        let errorCount = 0;
+        // simple SGD for perceptron
+        points.forEach(p => {
+            let guess = (p.nx * w[0] + p.ny * w[1] + b) >= 0 ? 1 : 0;
+            let error = p.label - guess;
+            if (error !== 0) errorCount++;
+
+            w[0] += lr * error * p.nx;
+            w[1] += lr * error * p.ny;
+            b += lr * error;
+        });
+
+        epoch++;
+        epochTxt.textContent = epoch;
+        draw();
+
+        if (errorCount === 0 && epoch > 5) {
+            // Converged
+            training = false;
+            btn.textContent = "Converged! 🏆";
+            btn.style.background = "#64ffda";
+            btn.style.color = "#000";
+            setTimeout(() => {
+                btn.textContent = "Train Model";
+                btn.style.background = "";
+                btn.style.color = "";
+            }, 3000);
+        } else if (epoch < 200) {
+            requestAnimationFrame(trainStep);
+        } else {
+            training = false;
+            btn.textContent = "Max Epochs Reached";
+            setTimeout(() => btn.textContent = "Train Model", 2000);
+        }
+    }
+
+    btn.addEventListener('click', () => {
+        if (points.length === 0) {
+            btn.textContent = "Add points first!";
+            setTimeout(() => btn.textContent = "Train Model", 1500);
+            return;
+        }
+
+        // Reset and train (random small weights)
+        w = [Math.random() * 0.2 - 0.1, Math.random() * 0.2 - 0.1];
+        b = 0;
+        epoch = 0;
+        training = true;
+        trainStep();
+    });
+
+    draw();
+}
+
 // ---- Init Everything ----
 document.addEventListener('DOMContentLoaded', () => {
     // Lock scroll during preloader
@@ -1455,6 +1671,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initKnowledgeGraph();
     initETLMiniGame();
     initGlobe();
+    initABTestSimulator();
+    initPerceptronSandbox();
     initNavbar();
     initScrollProgress();
     initBackToTop();

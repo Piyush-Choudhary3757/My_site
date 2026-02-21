@@ -842,11 +842,65 @@
         </div>
     </section>
 
+    <!-- Interactive Data Lab -->
+    <section class="section data-lab" id="data-lab">
+        <div class="container">
+            <h2 class="section-heading animate-on-scroll">
+                <span class="section-number">08.</span> Interactive Data Lab
+                <span class="heading-line"></span>
+            </h2>
+            <div class="lab-grid animate-on-scroll">
+
+                <!-- A/B Testing Simulator -->
+                <div class="lab-card glass-card">
+                    <h3 class="lab-title">📈 Live A/B Test Simulator</h3>
+                    <p class="lab-desc">I'm running a simulated A/B test on this button to increase conversions. Click
+                        it to simulate a user action. Watch the Bayesian probability update live.</p>
+
+                    <button class="btn btn-primary" id="ab-test-btn"
+                        style="align-self: flex-start; margin-bottom: 24px;">Convert Now (Variant B)</button>
+
+                    <div class="lab-metrics-box">
+                        <div class="lab-metrics-header">
+                            <span>Control: <span id="ab-conversions-A">142</span>/1000</span>
+                            <span class="lab-accent">Variant: <span id="ab-conversions-B">155</span>/<span
+                                    id="ab-traffic-B">1000</span></span>
+                        </div>
+                        <div class="lab-progress-bar">
+                            <div id="ab-bar-A" class="lab-bar-chunk a-bar"></div>
+                            <div id="ab-bar-B" class="lab-bar-chunk b-bar"></div>
+                        </div>
+                        <p class="lab-metrics-footer">Probability to be Best: <span id="ab-prob"
+                                class="lab-accent bold">78.4%</span></p>
+                    </div>
+                </div>
+
+                <!-- Perceptron Sandbox -->
+                <div class="lab-card glass-card">
+                    <h3 class="lab-title">🧠 AI Perceptron Sandbox</h3>
+                    <p class="lab-desc">Click inside the box to add data points (Class 0 left, Class 1 right). Then
+                        train the Machine Learning model to calculate the decision boundary.</p>
+
+                    <div id="perceptron-canvas-container" class="lab-canvas-container">
+                        <canvas id="perceptron-canvas"></canvas>
+                    </div>
+
+                    <div class="lab-controls">
+                        <button class="btn btn-secondary" id="train-perceptron-btn"
+                            style="padding: 8px 16px; font-size: 0.8rem;">Train Model</button>
+                        <span class="lab-stats">Epochs: <span id="perceptron-epochs" class="lab-accent">0</span></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
     <section class="section skills" id="skills">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">08.</span> Skills & Tools
+                <span class="section-number">09.</span> Skills & Tools
                 <span class="heading-line"></span>
             </h2>
             <!-- Interactive Skill Radar Chart -->
@@ -1098,7 +1152,7 @@
     <section class="section github-stats" id="github-stats">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">09.</span> GitHub Activity
+                <span class="section-number">10.</span> GitHub Activity
                 <span class="heading-line"></span>
             </h2>
 
@@ -1141,7 +1195,7 @@
     <section class="section certifications" id="certifications">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">10.</span> Certifications
+                <span class="section-number">11.</span> Certifications
                 <span class="heading-line"></span>
             </h2>
             <div class="certs-grid">
@@ -1285,7 +1339,7 @@
     <section class="section education" id="education">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">11.</span> Education
+                <span class="section-number">12.</span> Education
                 <span class="heading-line"></span>
             </h2>
             <div class="education-grid">
@@ -1326,7 +1380,7 @@
     <section class="section contact" id="contact">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">12.</span> Get In Touch
+                <span class="section-number">13.</span> Get In Touch
                 <span class="heading-line"></span>
             </h2>
             <div class="contact-content animate-on-scroll">
