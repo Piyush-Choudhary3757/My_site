@@ -1058,10 +1058,184 @@ function initOrbitCounters() {
             }
         });
     }, { threshold: 0.3 });
+    observer.observe(orbit);
 }
 
 
+// ---- Interactive World Map ----
+function initWorldMap() {
+    const canvas = document.getElementById('worldMapCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const W = 1100, H = 500;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
 
+    function lonLatToXY(lon, lat) {
+        return { x: ((lon + 180) / 360) * W, y: ((90 - lat) / 180) * H };
+    }
+
+    const locations = [
+        { name: 'Indore, India', lon: 75.86, lat: 22.72, color: '#64ffda', sub: 'B.Tech · SAGE University' },
+        { name: 'Tallahassee, FL', lon: -84.28, lat: 30.44, color: '#a78bfa', sub: 'M.S. · Florida State' },
+        { name: 'Jacksonville, FL', lon: -81.66, lat: 30.33, color: '#38bdf8', sub: 'Data Analyst · JEA' },
+    ];
+    const pts = locations.map(l => ({ ...l, ...lonLatToXY(l.lon, l.lat) }));
+
+    const continents = [
+        [[-130, 55], [-125, 60], [-100, 65], [-80, 60], [-65, 48], [-75, 30], [-85, 25], [-100, 20], [-105, 25], [-120, 35], [-130, 45], [-130, 55]],
+        [[-80, 10], [-70, 5], [-55, -5], [-40, -15], [-35, -25], [-40, -35], [-55, -50], [-70, -55], [-75, -45], [-70, -20], [-80, 0], [-80, 10]],
+        [[-10, 36], [0, 43], [5, 48], [10, 55], [15, 60], [25, 65], [30, 60], [40, 55], [30, 42], [25, 36], [15, 38], [5, 37], [-10, 36]],
+        [[-15, 15], [-5, 35], [10, 37], [20, 32], [35, 30], [42, 12], [50, 0], [40, -15], [30, -30], [20, -35], [12, -25], [5, -5], [-10, 5], [-15, 15]],
+        [[40, 55], [60, 55], [80, 45], [90, 28], [85, 22], [80, 8], [100, 5], [105, 15], [110, 22], [120, 30], [130, 35], [140, 40], [140, 50], [130, 55], [80, 60], [60, 60], [40, 55]],
+        [[115, -10], [130, -12], [150, -15], [153, -25], [148, -35], [140, -38], [130, -32], [115, -22], [113, -15], [115, -10]],
+    ];
+
+    let prog = 0, pulse = 0, started = false;
+
+    function hexRgba(hex, a) {
+        const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+        return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        // Grid
+        ctx.strokeStyle = 'rgba(100,255,218,0.03)';
+        ctx.lineWidth = 0.5;
+        for (let lon = -180; lon <= 180; lon += 30) {
+            const { x } = lonLatToXY(lon, 0);
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+        }
+        for (let lat = -60; lat <= 90; lat += 30) {
+            const { y } = lonLatToXY(0, lat);
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+        }
+
+        // Continents
+        continents.forEach(poly => {
+            ctx.beginPath();
+            poly.forEach((p, i) => {
+                const { x, y } = lonLatToXY(p[0], p[1]);
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            });
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(100,255,218,0.04)';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(100,255,218,0.12)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        });
+
+        // Flight arcs
+        const p = Math.min(prog, 1);
+        const arcs = [
+            { from: pts[0], to: pts[1], col: 'rgba(167,139,250,0.6)' },
+            { from: pts[1], to: pts[2], col: 'rgba(56,189,248,0.6)' },
+        ];
+
+        arcs.forEach((arc, ai) => {
+            const ap = Math.min(Math.max((p - ai * 0.4) / 0.6, 0), 1);
+            if (ap <= 0) return;
+            const fx = arc.from.x, fy = arc.from.y, tx = arc.to.x, ty = arc.to.y;
+            const cpX = (fx + tx) / 2, cpY = Math.min(fy, ty) - 100 - ai * 20;
+
+            // Dashed bg path
+            ctx.beginPath();
+            ctx.moveTo(fx, fy);
+            ctx.quadraticCurveTo(cpX, cpY, tx, ty);
+            ctx.strokeStyle = arc.col.replace('0.6', '0.1');
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([4, 6]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Animated path
+            ctx.beginPath();
+            const steps = Math.floor(100 * ap);
+            for (let i = 0; i <= steps; i++) {
+                const t = i / 100;
+                const x = (1 - t) * (1 - t) * fx + 2 * (1 - t) * t * cpX + t * t * tx;
+                const y = (1 - t) * (1 - t) * fy + 2 * (1 - t) * t * cpY + t * t * ty;
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = arc.col;
+            ctx.lineWidth = 2.5;
+            ctx.shadowColor = arc.col;
+            ctx.shadowBlur = 8;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Leading dot
+            if (ap > 0 && ap < 1) {
+                const t = ap;
+                const hx = (1 - t) * (1 - t) * fx + 2 * (1 - t) * t * cpX + t * t * tx;
+                const hy = (1 - t) * (1 - t) * fy + 2 * (1 - t) * t * cpY + t * t * ty;
+                ctx.beginPath();
+                ctx.arc(hx, hy, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+            }
+        });
+
+        // Location dots
+        pts.forEach((pt, i) => {
+            const a = Math.min(Math.max((p - i * 0.25) / 0.3, 0), 1);
+            if (a <= 0) return;
+
+            // Pulse
+            const pr = 12 + Math.sin(pulse + i * 1.2) * 4;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, pr * a, 0, Math.PI * 2);
+            ctx.fillStyle = hexRgba(pt.color, 0.12);
+            ctx.fill();
+
+            // Main dot
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 6 * a, 0, Math.PI * 2);
+            ctx.fillStyle = pt.color;
+            ctx.shadowColor = pt.color;
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // White center
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 2.5 * a, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+
+            // Labels
+            ctx.globalAlpha = a;
+            const lx = pt.x + 14, ly = pt.y - 8;
+            ctx.font = 'bold 12px "Outfit", sans-serif';
+            ctx.fillStyle = pt.color;
+            ctx.textAlign = 'left';
+            ctx.fillText(pt.name, lx, ly);
+            ctx.font = '10px "JetBrains Mono", monospace';
+            ctx.fillStyle = 'rgba(200,210,220,0.5)';
+            ctx.fillText(pt.sub, lx, ly + 16);
+            ctx.globalAlpha = 1;
+        });
+    }
+
+    function animate() {
+        if (prog < 1) prog += 0.008;
+        pulse += 0.04;
+        draw();
+        requestAnimationFrame(animate);
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting && !started) { started = true; animate(); }
+        });
+    }, { threshold: 0.2 });
+    observer.observe(canvas);
+}
 
 // ---- GSAP Scroll Animations ----
 // IMPORTANT: Only animate elements that do NOT use the CSS animate-on-scroll system
@@ -1146,6 +1320,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSkillRadar();
     initMatrixRain();
     initOrbitCounters();
+    initWorldMap();
 
     // GSAP (defer to allow library loading)
     setTimeout(initGSAPAnimations, 200);

@@ -1657,6 +1657,171 @@ img {
     /* width set by JS */
 }
 
+/* ---- Journey Map ---- */
+.journey-map {
+    overflow: hidden;
+}
+
+.journey-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 40px;
+    font-style: italic;
+}
+
+.map-container {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(100, 255, 218, 0.08);
+    background: rgba(13, 17, 23, 0.4);
+}
+
+.map-container canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ---- Achievements Timeline ---- */
+.achievement-timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 60px auto 0;
+    padding: 20px 0;
+}
+
+.achievement-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, rgba(100, 255, 218, 0.2) 10%, rgba(100, 255, 218, 0.2) 90%, transparent);
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+.achievement-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    z-index: 1;
+}
+
+.achievement-item[data-side="left"] {
+    justify-content: flex-start;
+    padding-right: calc(50% + 40px);
+}
+
+.achievement-item[data-side="right"] {
+    justify-content: flex-end;
+    padding-left: calc(50% + 40px);
+}
+
+.achievement-dot {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(13, 17, 23, 0.9);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.achievement-item:hover .achievement-dot {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+}
+
+.achievement-connector {
+    display: none;
+}
+
+.achievement-card {
+    padding: 24px 28px;
+    border-radius: 14px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.achievement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(100, 255, 218, 0.08);
+}
+
+.achievement-year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(100, 255, 218, 0.06);
+    border: 1px solid rgba(100, 255, 218, 0.12);
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.achievement-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.achievement-place {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.achievement-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Responsive achievements */
+@media (max-width: 768px) {
+    .achievement-line {
+        left: 22px;
+    }
+
+    .achievement-item[data-side="left"],
+    .achievement-item[data-side="right"] {
+        padding-left: 70px;
+        padding-right: 0;
+        justify-content: flex-start;
+    }
+
+    .achievement-dot {
+        left: 22px;
+        transform: translateX(-50%);
+    }
+
+    .achievement-timeline {
+        margin-top: 30px;
+    }
+
+    .achievement-item {
+        margin-bottom: 40px;
+    }
+}
+
 /* ---- What I Do ---- */
 .wid-grid {
     display: grid;
