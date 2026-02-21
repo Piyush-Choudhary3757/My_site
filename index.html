@@ -68,6 +68,9 @@
     <!-- 3D Neural Network Background (Three.js) -->
     <canvas id="neural-canvas"></canvas>
 
+    <!-- Matrix Data Rain -->
+    <canvas id="matrix-rain"></canvas>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <a href="#hero" class="nav-logo">
@@ -136,19 +139,48 @@
             </div>
         </div>
 
-        <!-- Auto-typing Code Terminal (right side of hero) -->
-        <div class="hero-terminal">
-            <div class="hero-terminal-window">
-                <div class="hero-terminal-header">
-                    <div class="terminal-dots">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
-                    </div>
-                    <span class="hero-terminal-tab">pipeline.py</span>
-                </div>
-                <pre
-                    class="hero-terminal-code"><code id="auto-typed-code"></code><span class="terminal-cursor-blink">|</span></pre>
+        <!-- Floating Data Orbit (right side of hero) -->
+        <div class="data-orbit" aria-hidden="true">
+            <div class="orbit-ring"></div>
+            <div class="orbit-card orbit-card-1 glass-card">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+                    <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+                    <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z" />
+                </svg>
+                <span class="orbit-value">500K+</span>
+                <span class="orbit-label">Records</span>
+            </div>
+            <div class="orbit-card orbit-card-2 glass-card">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                </svg>
+                <span class="orbit-value">95%</span>
+                <span class="orbit-label">Accuracy</span>
+            </div>
+            <div class="orbit-card orbit-card-3 glass-card">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
+                <span class="orbit-value">40%</span>
+                <span class="orbit-label">Efficiency ↑</span>
+            </div>
+            <div class="orbit-card orbit-card-4 glass-card">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <path d="M3 9h18M9 21V9" />
+                </svg>
+                <span class="orbit-value">10+</span>
+                <span class="orbit-label">Dashboards</span>
+            </div>
+            <!-- Central data icon -->
+            <div class="orbit-center">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                </svg>
             </div>
         </div>
 
@@ -718,6 +750,11 @@
                 <span class="section-number">05.</span> Skills & Tools
                 <span class="heading-line"></span>
             </h2>
+            <!-- Interactive Skill Radar Chart -->
+            <div class="radar-chart-container animate-on-scroll">
+                <canvas id="skillRadar" width="420" height="420"></canvas>
+                <p class="radar-hint">Hover to explore</p>
+            </div>
             <div class="skills-grid">
                 <!-- Data Analysis -->
                 <div class="skill-category glass-card animate-on-scroll" id="skill-data-analysis">

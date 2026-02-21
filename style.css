@@ -703,112 +703,209 @@ img {
     animation: fadeInUp 0.6s 1s forwards;
 }
 
-/* ---- Hero Auto-Typing Terminal ---- */
-.hero-terminal {
+/* ---- Matrix Data Rain Canvas ---- */
+#matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.06;
+}
+
+/* ---- Floating Data Orbit ---- */
+.data-orbit {
     flex-shrink: 0;
-    width: 440px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.6s 1.2s forwards;
-    margin-right: 40px;
+    width: 400px;
+    height: 400px;
+    position: relative;
+    margin-right: 20px;
     align-self: center;
+    opacity: 0;
+    animation: fadeIn 1s 1.2s forwards;
 }
 
-.hero-terminal-window {
-    background: rgba(13, 17, 23, 0.85);
-    border: 1px solid rgba(100, 255, 218, 0.15);
-    border-radius: 12px;
-    overflow: hidden;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(100, 255, 218, 0.05);
+.orbit-ring {
+    position: absolute;
+    inset: 30px;
+    border: 1px solid rgba(100, 255, 218, 0.08);
+    border-radius: 50%;
+    animation: orbitSpin 40s linear infinite;
 }
 
-.hero-terminal-header {
+.orbit-ring::after {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border: 1px dashed rgba(167, 139, 250, 0.06);
+    border-radius: 50%;
+}
+
+.orbit-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    justify-content: center;
+    background: rgba(100, 255, 218, 0.05);
+    border: 1px solid rgba(100, 255, 218, 0.15);
+    border-radius: 50%;
+    animation: pulse 3s ease-in-out infinite;
 }
 
-.hero-terminal-tab {
+.orbit-card {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: rgba(13, 17, 23, 0.7);
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: orbitFloat 6s ease-in-out infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    min-width: 90px;
+}
+
+.orbit-card:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 8px 40px rgba(100, 255, 218, 0.15);
+    border-color: rgba(100, 255, 218, 0.3);
+}
+
+.orbit-value {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.orbit-label {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.6rem;
     color: var(--text-muted);
-    background: rgba(100, 255, 218, 0.06);
-    padding: 3px 10px;
-    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
-.hero-terminal-code {
-    padding: 20px;
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    line-height: 1.8;
-    color: #e6edf3;
-    min-height: 160px;
-    overflow: hidden;
+/* Card positions around the orbit */
+.orbit-card-1 {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 0s;
 }
 
-.hero-terminal-code code {
-    white-space: pre;
+.orbit-card-2 {
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    animation-delay: 1.5s;
 }
 
-/* Syntax highlighting classes */
-.syntax-keyword {
-    color: #ff7b72;
+.orbit-card-3 {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 3s;
 }
 
-.syntax-function {
-    color: #d2a8ff;
+.orbit-card-4 {
+    top: 50%;
+    left: -10px;
+    transform: translateY(-50%);
+    animation-delay: 4.5s;
 }
 
-.syntax-string {
-    color: #a5d6ff;
-}
-
-.syntax-comment {
-    color: #8b949e;
-    font-style: italic;
-}
-
-.syntax-number {
-    color: #79c0ff;
-}
-
-.syntax-class {
-    color: #ffa657;
-}
-
-.syntax-variable {
-    color: #64ffda;
-}
-
-.syntax-operator {
-    color: #ff7b72;
-}
-
-.terminal-cursor-blink {
-    font-weight: 100;
-    font-size: 1.1em;
-    color: var(--accent);
-    animation: cursorBlink 1s infinite;
-}
-
-@keyframes cursorBlink {
+@keyframes orbitFloat {
 
     0%,
-    50% {
-        opacity: 1;
+    100% {
+        transform: translateY(0px) translateX(-50%);
     }
 
-    51%,
-    100% {
-        opacity: 0;
+    50% {
+        transform: translateY(-8px) translateX(-50%);
     }
+}
+
+.orbit-card-2,
+.orbit-card-4 {
+    /* Override for side cards */
+}
+
+@keyframes orbitFloat {
+
+    0%,
+    100% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -10px;
+    }
+}
+
+@keyframes orbitSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* ---- Skill Radar Chart ---- */
+.radar-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.radar-chart-container canvas {
+    max-width: 420px;
+    width: 100%;
+    height: auto;
+}
+
+.radar-hint {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 /* Buttons */
@@ -1882,7 +1979,7 @@ img {
 
 /* Hide terminal on screens too narrow for side-by-side hero layout */
 @media (max-width: 1200px) {
-    .hero-terminal {
+    .data-orbit {
         display: none;
     }
 }
@@ -2425,7 +2522,7 @@ img {
         display: none;
     }
 
-    .hero-terminal {
+    .data-orbit {
         display: none;
     }
 

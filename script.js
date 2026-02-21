@@ -805,151 +805,263 @@ function initTextScramble() {
     headings.forEach(h => observer.observe(h));
 }
 
-// ---- Auto-Typing Code Terminal ----
-function initAutoTypingTerminal() {
-    const codeEl = document.getElementById('auto-typed-code');
-    if (!codeEl) return;
+// ---- Interactive Skill Radar Chart ----
+function initSkillRadar() {
+    const canvas = document.getElementById('skillRadar');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const size = 420;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    ctx.scale(dpr, dpr);
 
-    const codeSnippets = [
-        {
-            tab: 'pipeline.py',
-            lines: [
-                { text: '# ETL Pipeline — Production', cls: 'syntax-comment' },
-                { text: 'import', cls: 'syntax-keyword', rest: ' pandas ', restCls: 'syntax-keyword', rest2: 'as pd', rest2Cls: 'syntax-variable' },
-                { text: 'from', cls: 'syntax-keyword', rest: ' sqlalchemy ', restCls: '', rest2: 'import create_engine', rest2Cls: 'syntax-function' },
-                { text: '' },
-                { text: 'df = pd.', cls: '', rest: 'read_sql', restCls: 'syntax-function', rest2: '(query, engine)', rest2Cls: '' },
-                { text: 'df = df.', cls: '', rest: 'dropna', restCls: 'syntax-function', rest2: '().reset_index()', rest2Cls: '' },
-                { text: 'df[', cls: '', rest: '"efficiency"', restCls: 'syntax-string', rest2: '] = df.output / df.input', rest2Cls: '' },
-                { text: 'df.', cls: '', rest: 'to_sql', restCls: 'syntax-function', rest2: '("kpi_metrics", engine)', rest2Cls: '' },
-            ]
-        },
-        {
-            tab: 'model.py',
-            lines: [
-                { text: '# ML Model Training', cls: 'syntax-comment' },
-                { text: 'from', cls: 'syntax-keyword', rest: ' sklearn.ensemble ', restCls: '', rest2: 'import RandomForestClassifier', rest2Cls: 'syntax-class' },
-                { text: 'from', cls: 'syntax-keyword', rest: ' sklearn.metrics ', restCls: '', rest2: 'import accuracy_score', rest2Cls: 'syntax-function' },
-                { text: '' },
-                { text: 'model = ', cls: '', rest: 'RandomForestClassifier', restCls: 'syntax-class', rest2: '(n_estimators=100)', rest2Cls: '' },
-                { text: 'model.', cls: '', rest: 'fit', restCls: 'syntax-function', rest2: '(X_train, y_train)', rest2Cls: '' },
-                { text: 'accuracy = ', cls: '', rest: 'accuracy_score', restCls: 'syntax-function', rest2: '(y_test, predictions)', rest2Cls: '' },
-                { text: 'print(f"Accuracy: ', cls: '', rest: '{accuracy:.2%}', restCls: 'syntax-variable', rest2: '")', rest2Cls: 'syntax-string' },
-            ]
-        },
-        {
-            tab: 'analysis.sql',
-            lines: [
-                { text: '-- KPI Dashboard Query', cls: 'syntax-comment' },
-                { text: 'SELECT', cls: 'syntax-keyword', rest: ' department,', restCls: '', rest2: '', rest2Cls: '' },
-                { text: '       COUNT', cls: 'syntax-function', rest: '(*) ', restCls: '', rest2: 'AS total_records,', rest2Cls: 'syntax-variable' },
-                { text: '       AVG', cls: 'syntax-function', rest: '(efficiency) ', restCls: '', rest2: 'AS avg_efficiency,', rest2Cls: 'syntax-variable' },
-                { text: '       SUM', cls: 'syntax-function', rest: '(cost) ', restCls: '', rest2: 'AS total_cost', rest2Cls: 'syntax-variable' },
-                { text: 'FROM', cls: 'syntax-keyword', rest: ' operational_metrics', restCls: '', rest2: '', rest2Cls: '' },
-                { text: 'WHERE', cls: 'syntax-keyword', rest: ' fiscal_year = ', restCls: '', rest2: '2025', rest2Cls: 'syntax-number' },
-                { text: 'GROUP BY', cls: 'syntax-keyword', rest: ' department ', restCls: '', rest2: 'ORDER BY avg_efficiency DESC;', rest2Cls: 'syntax-keyword' },
-            ]
+    const cx = size / 2;
+    const cy = size / 2;
+    const maxR = 160;
+    const categories = [
+        { label: 'Python', value: 0.92 },
+        { label: 'SQL', value: 0.95 },
+        { label: 'ML / AI', value: 0.80 },
+        { label: 'Dashboards', value: 0.88 },
+        { label: 'ETL Pipelines', value: 0.90 },
+        { label: 'Statistics', value: 0.85 },
+    ];
+    const n = categories.length;
+    let animProgress = 0;
+    let hoverIndex = -1;
+
+    function angleFor(i) {
+        return (Math.PI * 2 * i) / n - Math.PI / 2;
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, size, size);
+
+        // Grid rings
+        for (let ring = 1; ring <= 4; ring++) {
+            const r = (maxR * ring) / 4;
+            ctx.beginPath();
+            for (let i = 0; i <= n; i++) {
+                const a = angleFor(i % n);
+                const x = cx + r * Math.cos(a);
+                const y = cy + r * Math.sin(a);
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.strokeStyle = `rgba(100, 255, 218, ${ring === 4 ? 0.15 : 0.06})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
         }
+
+        // Axis lines
+        for (let i = 0; i < n; i++) {
+            const a = angleFor(i);
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + maxR * Math.cos(a), cy + maxR * Math.sin(a));
+            ctx.strokeStyle = 'rgba(100, 255, 218, 0.08)';
+            ctx.stroke();
+        }
+
+        // Data polygon (animated fill)
+        const progress = Math.min(animProgress, 1);
+        ctx.beginPath();
+        for (let i = 0; i <= n; i++) {
+            const idx = i % n;
+            const a = angleFor(idx);
+            const r = maxR * categories[idx].value * progress;
+            const x = cx + r * Math.cos(a);
+            const y = cy + r * Math.sin(a);
+            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+
+        // Gradient fill
+        const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
+        gradient.addColorStop(0, 'rgba(100, 255, 218, 0.15)');
+        gradient.addColorStop(1, 'rgba(167, 139, 250, 0.08)');
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // Stroke
+        ctx.strokeStyle = 'rgba(100, 255, 218, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Data points + Labels
+        for (let i = 0; i < n; i++) {
+            const a = angleFor(i);
+            const r = maxR * categories[i].value * progress;
+            const x = cx + r * Math.cos(a);
+            const y = cy + r * Math.sin(a);
+
+            // Glow dot
+            ctx.beginPath();
+            ctx.arc(x, y, i === hoverIndex ? 7 : 4, 0, Math.PI * 2);
+            ctx.fillStyle = i === hoverIndex ? '#64ffda' : 'rgba(100, 255, 218, 0.8)';
+            ctx.fill();
+            if (i === hoverIndex) {
+                ctx.beginPath();
+                ctx.arc(x, y, 12, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(100, 255, 218, 0.15)';
+                ctx.fill();
+            }
+
+            // Label
+            const labelR = maxR + 24;
+            const lx = cx + labelR * Math.cos(a);
+            const ly = cy + labelR * Math.sin(a);
+            ctx.font = i === hoverIndex ? 'bold 12px "JetBrains Mono", monospace' : '11px "JetBrains Mono", monospace';
+            ctx.fillStyle = i === hoverIndex ? '#64ffda' : 'rgba(200, 210, 220, 0.6)';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(categories[i].label, lx, ly);
+
+            // Value on hover
+            if (i === hoverIndex) {
+                ctx.font = 'bold 14px "Outfit", sans-serif';
+                ctx.fillStyle = '#64ffda';
+                ctx.fillText(Math.round(categories[i].value * 100) + '%', lx, ly + 16);
+            }
+        }
+    }
+
+    // Animate entrance
+    let started = false;
+    function animate() {
+        if (animProgress < 1) {
+            animProgress += 0.025;
+            draw();
+            requestAnimationFrame(animate);
+        } else {
+            draw();
+        }
+    }
+
+    // Start animation when visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !started) {
+                started = true;
+                animate();
+            }
+        });
+    }, { threshold: 0.3 });
+    observer.observe(canvas);
+
+    // Hover interaction
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = size / rect.width;
+        const scaleY = size / rect.height;
+        const mx = (e.clientX - rect.left) * scaleX;
+        const my = (e.clientY - rect.top) * scaleY;
+
+        hoverIndex = -1;
+        for (let i = 0; i < n; i++) {
+            const a = angleFor(i);
+            const r = maxR * categories[i].value;
+            const px = cx + r * Math.cos(a);
+            const py = cy + r * Math.sin(a);
+            if (Math.hypot(mx - px, my - py) < 20) {
+                hoverIndex = i;
+                break;
+            }
+        }
+        canvas.style.cursor = hoverIndex >= 0 ? 'pointer' : 'default';
+        if (animProgress >= 1) draw();
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        hoverIndex = -1;
+        if (animProgress >= 1) draw();
+    });
+}
+
+// ---- Matrix Data Rain ----
+function initMatrixRain() {
+    const canvas = document.getElementById('matrix-rain');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = '01アイウエオカキクケコ∑∏√∫≈≠∞SELECTFROMWHEREGROUPBYJOIN'.split('');
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(0).map(() => Math.random() * -100);
+
+    function draw() {
+        ctx.fillStyle = 'rgba(10, 14, 20, 0.08)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#64ffda';
+        ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            const x = i * fontSize;
+            const y = drops[i] * fontSize;
+
+            ctx.globalAlpha = Math.random() * 0.5 + 0.1;
+            ctx.fillText(char, x, y);
+
+            if (y > canvas.height && Math.random() > 0.98) {
+                drops[i] = 0;
+            }
+            drops[i] += 0.3 + Math.random() * 0.3;
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+
+// ---- Orbit Metric Counter Animation ----
+function initOrbitCounters() {
+    const orbit = document.querySelector('.data-orbit');
+    if (!orbit) return;
+
+    const values = orbit.querySelectorAll('.orbit-value');
+    const targets = [
+        { end: 500, suffix: 'K+' },
+        { end: 95, suffix: '%' },
+        { end: 40, suffix: '%' },
+        { end: 10, suffix: '+' },
     ];
 
-    let currentSnippet = 0;
-    let currentLine = 0;
-    let currentChar = 0;
-
-    function getLineHTML(lineObj) {
-        if (!lineObj.text) return '';
-        let html = '';
-        const fullText = lineObj.text + (lineObj.rest || '') + (lineObj.rest2 || '');
-        return fullText;
-    }
-
-    function buildSyntaxHTML(lineObj, charCount) {
-        const fullText = lineObj.text + (lineObj.rest || '') + (lineObj.rest2 || '');
-        const visibleText = fullText.substring(0, charCount);
-
-        // Build syntax-highlighted HTML for visible portion
-        let html = '';
-        let pos = 0;
-
-        // Part 1: lineObj.text
-        const t1 = lineObj.text;
-        const t1Visible = visibleText.substring(pos, Math.min(pos + t1.length, charCount));
-        if (t1Visible.length > 0) {
-            html += lineObj.cls ? `<span class="${lineObj.cls}">${t1Visible}</span>` : t1Visible;
-        }
-        pos += t1.length;
-
-        // Part 2: lineObj.rest
-        if (lineObj.rest && pos < charCount) {
-            const t2 = lineObj.rest;
-            const t2Visible = visibleText.substring(pos, Math.min(pos + t2.length, charCount));
-            if (t2Visible.length > 0) {
-                html += lineObj.restCls ? `<span class="${lineObj.restCls}">${t2Visible}</span>` : t2Visible;
+    let animated = false;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !animated) {
+                animated = true;
+                values.forEach((el, i) => {
+                    if (!targets[i]) return;
+                    const target = targets[i];
+                    const duration = 2000;
+                    const start = performance.now();
+                    function tick(now) {
+                        const progress = Math.min((now - start) / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(target.end * eased);
+                        el.textContent = current + target.suffix;
+                        if (progress < 1) requestAnimationFrame(tick);
+                    }
+                    setTimeout(() => requestAnimationFrame(tick), i * 200);
+                });
             }
-            pos += t2.length;
-        }
-
-        // Part 3: lineObj.rest2
-        if (lineObj.rest2 && pos < charCount) {
-            const t3 = lineObj.rest2;
-            const t3Visible = visibleText.substring(pos, Math.min(pos + t3.length, charCount));
-            if (t3Visible.length > 0) {
-                html += lineObj.rest2Cls ? `<span class="${lineObj.rest2Cls}">${t3Visible}</span>` : t3Visible;
-            }
-        }
-
-        return html;
-    }
-
-    function typeNextChar() {
-        const snippet = codeSnippets[currentSnippet];
-        const line = snippet.lines[currentLine];
-        const fullText = line.text + (line.rest || '') + (line.rest2 || '');
-
-        if (currentChar <= fullText.length) {
-            // Build all previous lines (fully typed)
-            let html = '';
-            for (let i = 0; i < currentLine; i++) {
-                html += buildSyntaxHTML(snippet.lines[i], 9999) + '\n';
-            }
-            // Current line (partially typed)
-            html += buildSyntaxHTML(line, currentChar);
-
-            codeEl.innerHTML = html;
-            currentChar++;
-            setTimeout(typeNextChar, 25 + Math.random() * 35);
-        } else {
-            // Move to next line
-            currentLine++;
-            currentChar = 0;
-            if (currentLine < snippet.lines.length) {
-                setTimeout(typeNextChar, 100);
-            } else {
-                // Snippet complete, wait then switch
-                setTimeout(() => {
-                    currentSnippet = (currentSnippet + 1) % codeSnippets.length;
-                    currentLine = 0;
-                    currentChar = 0;
-
-                    // Update tab name
-                    const tabEl = document.querySelector('.hero-terminal-tab');
-                    if (tabEl) tabEl.textContent = codeSnippets[currentSnippet].tab;
-
-                    // Fade out, clear, fade in
-                    codeEl.style.opacity = '0';
-                    setTimeout(() => {
-                        codeEl.innerHTML = '';
-                        codeEl.style.opacity = '1';
-                        typeNextChar();
-                    }, 400);
-                }, 3000);
-            }
-        }
-    }
-
-    // Start typing after preloader completes (3s preloader + 500ms buffer)
-    setTimeout(typeNextChar, 4000);
+        });
+    }, { threshold: 0.3 });
 }
+
+
+
 
 // ---- GSAP Scroll Animations ----
 // IMPORTANT: Only animate elements that do NOT use the CSS animate-on-scroll system
@@ -1031,7 +1143,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initTerminal();
     initCursorTrail();
     initTextScramble();
-    initAutoTypingTerminal();
+    initSkillRadar();
+    initMatrixRain();
+    initOrbitCounters();
 
     // GSAP (defer to allow library loading)
     setTimeout(initGSAPAnimations, 200);
