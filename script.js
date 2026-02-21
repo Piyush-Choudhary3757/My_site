@@ -1281,6 +1281,11 @@ function initETLMiniGame() {
     Object.keys(dropzones).forEach(key => {
         const dz = dropzones[key];
 
+        dz.addEventListener('dragenter', (e) => {
+            e.preventDefault(); // Necessary to allow dropping in some browsers
+            dz.classList.add('drag-over');
+        });
+
         dz.addEventListener('dragover', (e) => {
             e.preventDefault(); // Necessary to allow dropping
             dz.classList.add('drag-over');
