@@ -1069,78 +1069,7 @@ img {
 
 /* Glass Card (duplicate removed — see primary definition above) */
 
-/* ---- Stats Counter Strip ---- */
-.stats-strip {
-    padding: 48px 0;
-    position: relative;
-    z-index: 1;
-    border-top: 1px solid rgba(100, 255, 218, 0.08);
-    border-bottom: 1px solid rgba(100, 255, 218, 0.08);
-    background: rgba(255, 255, 255, 0.015);
-    backdrop-filter: blur(8px);
-}
 
-.stats-grid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.stat-item {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-}
-
-.stat-suffix {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-left: -4px;
-}
-
-.stat-label {
-    font-size: 0.8rem;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    margin-top: 4px;
-}
-
-.stat-divider {
-    width: 1px;
-    height: 40px;
-    background: var(--glass-border);
-}
-
-@media (max-width: 600px) {
-    .stats-grid {
-        gap: 24px;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-    }
-
-    .stat-divider {
-        display: none;
-    }
-}
 
 /* ---- About Section ---- */
 .about-grid {
