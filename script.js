@@ -1486,6 +1486,166 @@ function initPerceptronSandbox() {
     draw();
 }
 
+// ---- Chaos Monkey Data Pipeline Simulator ----
+function initChaosMonkey() {
+    const container = document.getElementById('chaos-graph-container');
+    const chaosBtn = document.getElementById('chaos-btn');
+    const resetBtn = document.getElementById('chaos-reset-btn');
+    const logsContainer = document.getElementById('chaos-logs');
+
+    if (!container || !chaosBtn || typeof ForceGraph === 'undefined') return;
+
+    // Define colors
+    const colors = {
+        api: '#38bdf8', // Light blue
+        broker: '#a78bfa', // Purple
+        process: '#64ffda', // Teal
+        storageHealthy: '#22c55e', // Green
+        storageBroken: '#ff4e50', // Red
+        dlq: '#fbbf24' // Yellow
+    };
+
+    const initialNodes = [
+        { id: '1. API Gateway', group: 'api', val: 15, color: colors.api },
+        { id: '2. Kafka Stream', group: 'broker', val: 20, color: colors.broker },
+        { id: '3. Spark ETL', group: 'process', val: 25, color: colors.process },
+        { id: '4. Primary DB', group: 'storage', val: 30, color: colors.storageHealthy },
+        { id: '5. Replica DB', group: 'storage', val: 20, color: colors.storageHealthy },
+        { id: '6. S3 Data Lake', group: 'storage', val: 25, color: colors.storageHealthy },
+        { id: 'DLQ / Fallback', group: 'dlq', val: 15, color: colors.dlq }
+    ];
+
+    const initialLinks = [
+        { source: '1. API Gateway', target: '2. Kafka Stream' },
+        { source: '2. Kafka Stream', target: '3. Spark ETL' },
+        { source: '3. Spark ETL', target: '4. Primary DB' },
+        { source: '4. Primary DB', target: '5. Replica DB' }, // Sync
+        { source: '4. Primary DB', target: '6. S3 Data Lake' }
+    ];
+
+    let graphData = {
+        nodes: JSON.parse(JSON.stringify(initialNodes)),
+        links: JSON.parse(JSON.stringify(initialLinks))
+    };
+
+    let isOutage = false;
+
+    // Output logs terminal
+    function appendLog(msg, color = '#a78bfa') {
+        const line = document.createElement('div');
+        const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' });
+        line.innerHTML = `[${time}] <span style="transform: none;" class="log-color"></span>`;
+        line.querySelector('.log-color').style.color = color;
+        line.querySelector('.log-color').innerText = msg;
+        if (logsContainer.children.length > 5) {
+            logsContainer.removeChild(logsContainer.firstChild); // Keep it small
+        }
+        logsContainer.appendChild(line);
+    }
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    const Graph = ForceGraph()(container)
+        .width(width)
+        .height(height)
+        .backgroundColor('rgba(0,0,0,0)')
+        .nodeRelSize(6)
+        .nodeLabel('id')
+        .nodeColor('color')
+        .linkColor(() => 'rgba(100, 255, 218, 0.3)')
+        .linkWidth(2)
+        .linkDirectionalParticles(3)
+        .linkDirectionalParticleWidth(3)
+        .linkDirectionalParticleSpeed(d => (d.target.id === 'DLQ / Fallback' || (d.target && d.target.id === 'DLQ / Fallback')) ? 0.005 : 0.01)
+        .graphData(graphData)
+        .d3Force('charge', d3.forceManyBody().strength(-200)) // repel each other slightly
+        .d3Force('link', d3.forceLink().id(d => d.id).distance(80))
+        .cooldownTicks(100)
+        .onEngineStop(() => Graph.zoomToFit(200, 30));
+
+    // Custom node rendering (similar to knowledge graph)
+    Graph.nodeCanvasObject((node, ctx, globalScale) => {
+        const label = node.id;
+        const fontSize = 12 / globalScale;
+        ctx.font = `${fontSize}px "JetBrains Mono"`;
+        const textWidth = ctx.measureText(label).width;
+        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
+
+        // Draw glowing outline
+        ctx.shadowBlur = isOutage && node.id === '4. Primary DB' ? 20 : 10;
+        ctx.shadowColor = node.color;
+
+        ctx.fillStyle = 'rgba(10, 10, 26, 0.9)';
+        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+        ctx.shadowBlur = 0; // reset
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = node.color;
+        ctx.fillText(label, node.x, node.y);
+    });
+
+    appendLog('Pipeline initialized. All nodes healthy.', colors.storageHealthy);
+
+    chaosBtn.addEventListener('click', () => {
+        if (isOutage) return;
+        isOutage = true;
+
+        chaosBtn.style.display = 'none';
+        resetBtn.style.display = 'inline-block';
+
+        appendLog('CRITICAL: Primary DB Failure detected!', colors.storageBroken);
+
+        setTimeout(() => {
+            appendLog('Rerouting traffic to Replica DB...', colors.dlq);
+            appendLog('Flushing errors to DLQ...', colors.dlq);
+
+            // Update Graph Data gracefully
+            const newNodes = JSON.parse(JSON.stringify(initialNodes));
+            newNodes.forEach(n => {
+                if (n.id === '4. Primary DB') {
+                    n.color = colors.storageBroken;
+                }
+            });
+
+            // Modify links for failover
+            const newLinks = [
+                { source: '1. API Gateway', target: '2. Kafka Stream' },
+                { source: '2. Kafka Stream', target: '3. Spark ETL' },
+                { source: '3. Spark ETL', target: 'DLQ / Fallback' },
+                { source: '3. Spark ETL', target: '5. Replica DB' }, // Failover route
+                { source: '5. Replica DB', target: '6. S3 Data Lake' }
+            ];
+
+            Graph.graphData({ nodes: newNodes, links: newLinks });
+
+            setTimeout(() => {
+                appendLog('Failover complete. 0 data loss.', colors.storageHealthy);
+            }, 1000);
+
+        }, 500);
+    });
+
+    resetBtn.addEventListener('click', () => {
+        if (!isOutage) return;
+        isOutage = false;
+
+        resetBtn.style.display = 'none';
+        chaosBtn.style.display = 'inline-block';
+
+        appendLog('Restarting Primary DB cluster...', colors.api);
+
+        setTimeout(() => {
+            Graph.graphData({
+                nodes: JSON.parse(JSON.stringify(initialNodes)),
+                links: JSON.parse(JSON.stringify(initialLinks))
+            });
+            appendLog('Primary DB online. Back to stable.', colors.storageHealthy);
+        }, 800);
+    });
+}
+
 // ---- Init Everything ----
 document.addEventListener('DOMContentLoaded', () => {
     // Lock scroll during preloader
@@ -1511,6 +1671,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initKnowledgeGraph();
     initETLMiniGame();
     initPerceptronSandbox();
+    initChaosMonkey();
     initNavbar();
     initScrollProgress();
     initBackToTop();

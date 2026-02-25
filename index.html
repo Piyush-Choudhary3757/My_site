@@ -863,6 +863,37 @@
                     </div>
                 </div>
 
+                <!-- Chaos Monkey Game -->
+                <div class="lab-card glass-card chaos-monkey-full">
+                    <div class="chaos-header" style="text-align: center; margin-bottom: 24px;">
+                        <h3 class="lab-title">🐒 Data Pipeline "Chaos Monkey"</h3>
+                        <p class="lab-desc">
+                            Enterprise cloud architecture is all about fault tolerance. The animated graph below
+                            represents a high-throughput <strong>Data Pipeline</strong>. Click <strong>"Simulate
+                                Outage"</strong> to randomly destroy a core node. Watch the resilient architecture
+                            perfectly fail-over and route traffic to backup instances and dead-letter queues.
+                        </p>
+                    </div>
+
+                    <div id="chaos-graph-container" class="lab-canvas-container"
+                        style="height: 400px; width: 100%; border-radius: 12px; background: rgba(10, 10, 26, 0.6); position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);">
+                        <div id="chaos-terminal" class="terminal-mockup"
+                            style="position: absolute; top: 10px; right: 10px; width: 250px; background: rgba(5, 5, 10, 0.9); border: 1px solid var(--glass-border); border-radius: 4px; padding: 10px; font-family: var(--font-mono); font-size: 0.75rem; color: #a78bfa; height: 120px; overflow-y: hidden; z-index: 10; opacity: 0.8; pointer-events: none;">
+                            <div style="color: #64ffda; margin-bottom: 5px;">> cluster_status --monitor</div>
+                            <div id="chaos-logs"></div>
+                        </div>
+                    </div>
+
+                    <div class="lab-controls"
+                        style="display: flex; justify-content: center; align-items: center; gap: 32px; margin-top: auto;">
+                        <button class="btn btn-primary" id="chaos-btn"
+                            style="padding: 12px 24px; font-size: 1rem; border: 1px solid #ff4e50; background: rgba(255, 78, 80, 0.1); color: #ff4e50;">Simulate
+                            Outage</button>
+                        <button class="btn btn-secondary" id="chaos-reset-btn"
+                            style="padding: 12px 24px; font-size: 1rem; display: none;">Restore Cluster</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
