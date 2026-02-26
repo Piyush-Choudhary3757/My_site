@@ -401,6 +401,9 @@ img {
     display: flex;
     list-style: none;
     gap: 8px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-link {
