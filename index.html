@@ -795,128 +795,13 @@
         </div>
     </section>
 
-    <!-- Model Lifecycle & Monitoring Section -->
-    <section class="section model-lifecycle" id="model-lifecycle">
-        <div class="container">
-            <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">07.</span> Model Lifecycle & Monitoring
-                <span class="heading-line"></span>
-            </h2>
-            <p class="section-description animate-on-scroll"
-                style="margin-bottom:40px; color:var(--text-secondary); max-width:600px;">
-                End-to-end ownership of predictive model development — from problem
-                framing to production monitoring and retraining.
-            </p>
 
-            <div class="etl-visualizer animate-on-scroll" style="margin-bottom:20px;">
-                <div class="etl-pipeline" style="flex-wrap: wrap;">
-                    <div class="etl-stage" title="Identify goals and metrics">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="12" y1="8" x2="12" y2="12" />
-                                <line x1="12" y1="16" x2="12.01" y2="16" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Problem Definition</span>
-                    </div>
-                    <div class="etl-connector">
-                        <div class="data-packet"></div>
-                    </div>
-                    <div class="etl-stage" title="Ingest from DBs & APIs">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                <polyline points="7 10 12 15 17 10" />
-                                <line x1="12" y1="15" x2="12" y2="3" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Data Collection</span>
-                    </div>
-                    <div class="etl-connector">
-                        <div class="data-packet"></div>
-                    </div>
-                    <div class="etl-stage" title="Cleanse & Create features">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <polyline points="16 18 22 12 16 6" />
-                                <polyline points="8 6 2 12 8 18" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Feature Engineering</span>
-                    </div>
-                    <div class="etl-connector">
-                        <div class="data-packet"></div>
-                    </div>
-                    <div class="etl-stage" title="Train statistical models">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                                <path d="M2 17l10 5 10-5" />
-                                <path d="M2 12l10 5 10-5" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Model Training</span>
-                    </div>
-                    <div class="etl-connector">
-                        <div class="data-packet"></div>
-                    </div>
-                    <div class="etl-stage" title="Test & Cross-validate">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                <polyline points="22 4 12 14.01 9 11.01" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Validation</span>
-                    </div>
-                    <div class="etl-connector">
-                        <div class="data-packet"></div>
-                    </div>
-                    <div class="etl-stage" title="Deploy to production">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-                                <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-                                <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-                                <line x1="12" y1="20" x2="12.01" y2="20" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Deployment</span>
-                    </div>
-                    <div class="etl-connector">
-                        <div class="data-packet"></div>
-                    </div>
-                    <div class="etl-stage" title="Track data drift & metrics">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Monitoring</span>
-                    </div>
-                    <div class="etl-connector">
-                        <div class="data-packet"></div>
-                    </div>
-                    <div class="etl-stage" title="Update model with new data">
-                        <div class="etl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M3 2v6h6" />
-                                <path d="M21 12A9 9 0 0 0 6 5.3L3 8" />
-                                <path d="M21 22v-6h-6" />
-                                <path d="M3 12a9 9 0 0 0 15 6.7l3-2.7" />
-                            </svg></div>
-                        <span class="etl-label" style="font-size:0.75rem">Retraining</span>
-                    </div>
-                </div>
-            </div>
-            <p class="section-description animate-on-scroll" style="color:var(--text-secondary); max-width:100%;">
-                Applied across JEA's water/wastewater operational systems — monitoring
-                decision model performance, detecting data drift, and ensuring
-                statistical reliability on 500K+ records spanning 5 fiscal years.
-            </p>
-        </div>
-    </section>
 
     <!-- Projects & Research Section -->
     <section class="section projects" id="projects">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">08.</span> Projects & Research
+                <span class="section-number">07.</span> Projects & Research
                 <span class="heading-line"></span>
             </h2>
             <div class="projects-grid">
@@ -1092,7 +977,7 @@
     <section class="section knowledge-graph" id="knowledge-graph">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">09.</span> Neural Knowledge Graph
+                <span class="section-number">08.</span> Neural Knowledge Graph
                 <span class="heading-line"></span>
             </h2>
             <p class="section-subtitle animate-on-scroll">Interactive web of my skills, experience, and projects. Click,
@@ -1106,7 +991,7 @@
     <section class="section etl-game" id="etl-game">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">10.</span> ETL Pipeline Visualizer
+                <span class="section-number">09.</span> ETL Pipeline Visualizer
                 <span class="heading-line"></span>
             </h2>
             <p class="section-subtitle animate-on-scroll">Drag the raw data block through the pipeline to see it
@@ -1170,7 +1055,7 @@
     <section class="section data-lab" id="data-lab">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">11.</span> Interactive Data Lab
+                <span class="section-number">10.</span> Interactive Data Lab
                 <span class="heading-line"></span>
             </h2>
             <div class="lab-container animate-on-scroll">
@@ -1208,7 +1093,7 @@
     <section class="section skills" id="skills">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">12.</span> Skills & Tools
+                <span class="section-number">11.</span> Skills & Tools
                 <span class="heading-line"></span>
             </h2>
             <!-- Interactive Skill Radar Chart -->
@@ -1728,7 +1613,7 @@
     <section class="section github-stats" id="github-stats">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">13.</span> GitHub Activity
+                <span class="section-number">12.</span> GitHub Activity
                 <span class="heading-line"></span>
             </h2>
 
@@ -1771,7 +1656,7 @@
     <section class="section certifications" id="certifications">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">14.</span> Certifications
+                <span class="section-number">13.</span> Certifications
                 <span class="heading-line"></span>
             </h2>
             <div class="certs-grid">
@@ -1915,7 +1800,7 @@
     <section class="section contact" id="contact">
         <div class="container">
             <h2 class="section-heading animate-on-scroll">
-                <span class="section-number">15.</span> Get In Touch
+                <span class="section-number">14.</span> Get In Touch
                 <span class="heading-line"></span>
             </h2>
             <div class="contact-content animate-on-scroll">
