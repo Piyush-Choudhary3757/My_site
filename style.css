@@ -1201,14 +1201,14 @@ body[data-mode="recruiter"] .recruiter-content {
 
 .about-highlights {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 24px;
     margin-top: 36px;
 }
 
 .highlight-card {
     text-align: center;
-    padding: 24px 16px;
+    padding: 24px 12px;
     background: var(--glass);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
