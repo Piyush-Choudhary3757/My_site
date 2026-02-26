@@ -1181,10 +1181,12 @@ body[data-mode="recruiter"] .recruiter-content {
 
 /* ---- About Section ---- */
 .about-grid {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 850px;
+    margin: 0 auto;
     gap: 60px;
-    align-items: start;
 }
 
 .about-text p {
