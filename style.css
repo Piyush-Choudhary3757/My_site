@@ -743,7 +743,7 @@ body[data-mode="recruiter"] .recruiter-content {
 }
 
 .hero-tagline {
-    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    font-size: clamp(1.5rem, 3.5vw, 2.6rem);
     font-weight: 700;
     color: var(--text-muted);
     letter-spacing: -0.02em;
