@@ -239,13 +239,13 @@ function initRotatingText() {
     if (!element) return;
 
     const phrases = [
-        'build predictive models and analytics systems',
-        'turn 500K+ records into decisions',
-        'automate what takes hours into seconds',
-        'build the dashboards leadership actually uses',
-        'find the signal in the noise',
-        'connect raw utility data to real-world impact',
-        'engineer pipelines that don\'t break at 3am',
+        'build predictive models',
+        'turn 500K+ records into insights',
+        'automate complex workflows',
+        'build high-impact dashboards',
+        'find signal in the noise',
+        'drive real-world impact',
+        'engineer bulletproof pipelines',
         'make data tell the truth'
     ];
     let index = 0;
