@@ -1252,43 +1252,87 @@ body[data-mode="recruiter"] .recruiter-content {
     height: 320px;
 }
 
-.image-placeholder {
+.image-matrix-container {
     width: 100%;
     height: 100%;
     border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, rgba(100, 255, 218, 0.05), rgba(167, 139, 250, 0.05));
-    border: 1px solid var(--glass-border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
     position: relative;
     z-index: 1;
     overflow: hidden;
+    background: #000;
+    border: 1px solid var(--accent);
+    box-shadow: inset 0 0 20px rgba(100, 255, 218, 0.2);
+    transition: all 0.5s ease;
 }
 
-.image-placeholder::before {
-    content: '';
+.image-matrix-container:hover {
+    box-shadow: inset 0 0 40px rgba(100, 255, 218, 0.4), 0 0 20px rgba(100, 255, 218, 0.3);
+    border-color: rgba(100, 255, 218, 0.9);
+}
+
+.matrix-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.2) brightness(0.9) sepia(100%) hue-rotate(120deg) saturate(3.5);
+    mix-blend-mode: hard-light;
+    opacity: 0.85;
+    transition: filter 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-matrix-container:hover .matrix-profile-img {
+    filter: grayscale(0%) contrast(1) brightness(1) sepia(0%) hue-rotate(0deg) saturate(1);
+    transform: scale(1.05);
+    mix-blend-mode: normal;
+    opacity: 1;
+}
+
+/* Green Scanline Overlay */
+.matrix-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(100, 255, 218, 0.08), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(167, 139, 250, 0.08), transparent 60%);
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 2px,
+            transparent 2px,
+            transparent 4px);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
-.placeholder-icon {
-    color: var(--accent);
-    opacity: 0.5;
+.image-matrix-container:hover .matrix-overlay {
+    opacity: 0;
 }
 
-.placeholder-initials {
-    font-size: 3rem;
-    font-weight: 900;
-    background: var(--gradient-1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    opacity: 0.6;
+/* Moving scanner line */
+.matrix-scanner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(100, 255, 218, 0.4), transparent);
+    z-index: 3;
+    animation: scanAnimation 3s linear infinite;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.image-matrix-container:hover .matrix-scanner {
+    opacity: 0;
+}
+
+@keyframes scanAnimation {
+    0% {
+        transform: translateY(-100px);
+    }
+
+    100% {
+        transform: translateY(350px);
+    }
 }
 
 .image-border {
