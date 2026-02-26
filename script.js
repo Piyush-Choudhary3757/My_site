@@ -239,11 +239,14 @@ function initRotatingText() {
     if (!element) return;
 
     const phrases = [
-        'turn data into decisions',
-        'build analytics pipelines',
-        'create smart dashboards',
-        'explore LLMs & AI',
-        'automate everything'
+        'build predictive models and analytics systems',
+        'turn 500K+ records into decisions',
+        'automate what takes hours into seconds',
+        'build the dashboards leadership actually uses',
+        'find the signal in the noise',
+        'connect raw utility data to real-world impact',
+        'engineer pipelines that don\'t break at 3am',
+        'make data tell the truth'
     ];
     let index = 0;
 
@@ -264,7 +267,7 @@ function initRotatingText() {
                 });
             });
         }, 300);
-    }, 3000);
+    }, 2800);
 }
 
 // ---- Navbar ----
@@ -826,6 +829,8 @@ function initSkillRadar() {
         { label: 'Dashboards', value: 0.88 },
         { label: 'ETL Pipelines', value: 0.90 },
         { label: 'Statistics', value: 0.85 },
+        { label: 'Statistical Modeling', value: 0.88 },
+        { label: 'Predictive Analytics', value: 0.85 }
     ];
     const n = categories.length;
     let animProgress = 0;
@@ -1121,7 +1126,19 @@ function initKnowledgeGraph() {
             { id: 'AICTE', group: 3, val: 10, color: '#a78bfa' },
             { id: 'ETL Pipeline', group: 4, val: 12, color: '#38bdf8' },
             { id: 'AI Music GAN', group: 4, val: 12, color: '#38bdf8' },
-            { id: 'Dashboard', group: 4, val: 12, color: '#38bdf8' }
+            { id: 'Dashboard', group: 4, val: 12, color: '#38bdf8' },
+            { id: 'Statistical Modeling', group: 2, val: 20 },
+            { id: 'Forecasting', group: 4, val: 15 },
+            { id: 'Utility Modeling', group: 4, val: 20 },
+            { id: 'Model Lifecycle', group: 4, val: 18 },
+            { id: 'ML/AI', group: 2, val: 18 },
+            { id: 'Big Data', group: 2, val: 18 },
+            { id: 'Hadoop', group: 2, val: 12 },
+            { id: 'Spark', group: 2, val: 12 },
+            { id: 'Governance', group: 5, val: 15, color: '#f59e0b' },
+            { id: 'DB2/Oracle', group: 5, val: 12, color: '#f59e0b' },
+            { id: 'Data Validation', group: 5, val: 15, color: '#f59e0b' },
+            { id: 'SAS', group: 2, val: 15 }
         ],
         links: [
             { source: 'Piyush', target: 'Python' },
@@ -1137,7 +1154,28 @@ function initKnowledgeGraph() {
             { source: 'Python', target: 'AI Music GAN' },
             { source: 'Python', target: 'LLMs' },
             { source: 'SQL', target: 'Dashboard' },
-            { source: 'ETL Pipeline', target: 'Python' }
+            { source: 'ETL Pipeline', target: 'Python' },
+            { source: 'Piyush', target: 'Statistical Modeling' },
+            { source: 'Piyush', target: 'Utility Modeling' },
+            { source: 'Piyush', target: 'Model Lifecycle' },
+            { source: 'Piyush', target: 'Big Data' },
+            { source: 'Piyush', target: 'Governance' },
+            { source: 'Statistical Modeling', target: 'Python' },
+            { source: 'Statistical Modeling', target: 'SQL' },
+            { source: 'Statistical Modeling', target: 'JEA' },
+            { source: 'Statistical Modeling', target: 'Forecasting' },
+            { source: 'Utility Modeling', target: 'JEA' },
+            { source: 'Utility Modeling', target: 'Python' },
+            { source: 'Utility Modeling', target: 'SQL' },
+            { source: 'Model Lifecycle', target: 'ML/AI' },
+            { source: 'Model Lifecycle', target: 'Python' },
+            { source: 'Model Lifecycle', target: 'AWS' },
+            { source: 'Big Data', target: 'Hadoop' },
+            { source: 'Big Data', target: 'Spark' },
+            { source: 'Big Data', target: 'SQL' },
+            { source: 'Governance', target: 'DB2/Oracle' },
+            { source: 'Governance', target: 'Data Validation' },
+            { source: 'SAS', target: 'Statistical Modeling' }
         ]
     };
 

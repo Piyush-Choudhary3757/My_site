@@ -935,6 +935,26 @@ body[data-mode="recruiter"] .recruiter-content {
     animation-delay: 4.5s;
 }
 
+.orbit-card-5 {
+    bottom: -10px;
+    right: 15%;
+    transform: translateX(0);
+    animation-name: orbitFloatOffCenter;
+    animation-delay: 6s;
+}
+
+@keyframes orbitFloatOffCenter {
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0);
+    }
+
+    50% {
+        transform: translateY(-8px) translateX(0);
+    }
+}
+
 @keyframes orbitFloat {
 
     0%,
